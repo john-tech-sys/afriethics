@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Blog · {{ site_settings.site_name|default:"AfriEthics" }}{% endblock %}
+
+{% block content %}
+  <h1 class="h3">Blog</h1>
+
+  {% for post in posts %}
+    <article class="mb-4 pb-3 border-bottom">
+      <h2 class="h5"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+      <div class="small text-muted">{{ post.published_at|date:"M j, Y" }}</div>
+      <p class="mb-0">{{ post.excerpt|default:post.content|truncatechars:240 }}</p>
+    </article>
+  {% empty %}
+    <p class="text-muted">No posts yet.</p>
+  {% endfor %}
+
+  {% if is_paginated %}
+    <nav>
+      <ul class="pagination">
+        {% if page_obj.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">Previous</span></li>
+        {% endif %}
+
+        <li class="page-item disabled"><span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span></li>
+
+        {% if page_obj.has_next %}
+          <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+        {% else %}
+          <li class="page-item disabled"><span class="page-link">Next</span></li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}
+{% endblock %}

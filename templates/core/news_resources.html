@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}News & Resources · {{ site_settings.name|default:"AfriEthics Initiative" }}{% endblock %}
+
+{% block content %}
+
+<!-- Page Header Start -->
+<div class="container-fluid bg-primary text-white py-5">
+  <div class="container text-center">
+    <h1 class="display-4 mb-3">News & Resources</h1>
+    <p class="fs-5">Stay informed with our latest updates, insights, and educational resources on ethics and governance.</p>
+  </div>
+</div>
+<!-- Page Header End -->
+
+<!-- Main Content Start -->
+<div class="container py-5">
+  <!-- Tabs Navigation -->
+  <ul class="nav nav-tabs mb-5 justify-content-center" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="news-tab" data-bs-toggle="tab" data-bs-target="#news" type="button" role="tab">
+        <i class="fas fa-newspaper me-2"></i>Latest News
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="resources-tab" data-bs-toggle="tab" data-bs-target="#resources" type="button" role="tab">
+        <i class="fas fa-book me-2"></i>Resources
+      </button>
+    </li>
+  </ul>
+
+  <!-- Tab Content -->
+  <div class="tab-content">
+    <!-- News Tab -->
+    <div class="tab-pane fade show active" id="news" role="tabpanel">
+      <h2 class="h3 mb-4">Latest News & Updates</h2>
+      {% if posts %}
+        <div class="row g-4">
+          {% for post in posts %}
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.{{ forloop.counter }}s">
+              <div class="card h-100 border-0 shadow-sm">
+                {% if post.featured_image %}
+                  <img src="{{ post.featured_image.url }}" class="card-img-top" alt="{{ post.title }}">
+                {% endif %}
+                <div class="card-body">
+                  <small class="text-muted">
+                    <i class="fas fa-calendar me-2"></i>{{ post.published_at|date:"M d, Y" }}
+                  </small>
+                  <h5 class="card-title mt-3">{{ post.title }}</h5>
+                  <p class="card-text">{{ post.excerpt|default:post.content|truncatewords:40 }}</p>
+                  <a href="{% url 'blog:detail' post.slug %}" class="btn btn-sm btn-primary">
+                    Read Full Article <i class="fas fa-arrow-right ms-1"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="alert alert-info" role="alert">
+          <i class="fas fa-info-circle me-2"></i>No news articles available at this time.
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Resources Tab -->
+    <div class="tab-pane fade" id="resources" role="tabpanel">
+      <h2 class="h3 mb-4">Learning Resources</h2>
+      {% if resources %}
+        <div class="row g-4">
+          {% for resource in resources %}
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.{{ forloop.counter }}s">
+              <div class="card h-100 border-0 shadow-sm">
+                {% if resource.thumbnail %}
+                  <img src="{{ resource.thumbnail.url }}" class="card-img-top" alt="{{ resource.title }}">
+                {% else %}
+                  <div class="card-img-top d-flex align-items-center justify-content-center" style="height: 200px; background-color: #E8F0FB;">
+                    <i class="fas fa-file fa-3x text-muted"></i>
+                  </div>
+                {% endif %}
+                <div class="card-body">
+                  <span class="badge bg-secondary mb-2">{{ resource.get_resource_type_display }}</span>
+                  <h5 class="card-title">{{ resource.title }}</h5>
+                  <p class="card-text">{{ resource.description|truncatewords:30 }}</p>
+                </div>
+                <div class="card-footer bg-white border-top-0">
+                  {% if resource.file %}
+                    <a href="{{ resource.file.url }}" class="btn btn-sm btn-primary" download>
+                      <i class="fas fa-download me-1"></i>Download
+                    </a>
+                  {% elif resource.external_url %}
+                    <a href="{{ resource.external_url }}" class="btn btn-sm btn-primary" target="_blank">
+                      <i class="fas fa-external-link-alt me-1"></i>View Online
+                    </a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="alert alert-info" role="alert">
+          <i class="fas fa-info-circle me-2"></i>No resources available at this time.
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+<!-- Main Content End -->
+
+<!-- Call to Action Start -->
+<div class="container-fluid py-5 mt-5" style="background-color: #E8F0FB;">
+  <div class="container text-center">
+    <h2 class="h3 mb-4">Share Your Knowledge</h2>
+    <p class="mb-4">Have news or resources to share? We'd love to hear from you.</p>
+    <a class="btn btn-primary btn-lg" href="/contact/">Contact Us</a>
+  </div>
+</div>
+<!-- Call to Action End -->
+
+{% endblock %}

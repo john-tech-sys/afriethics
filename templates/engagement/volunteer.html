@@ -1,0 +1,452 @@
+{% extends "base.html" %}
+
+{% block title %}Volunteer · {{ site_settings.name|default:"AfriEthics Initiative" }}{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<div class="page-header">
+  <div class="container">
+    <h1>Make a Difference</h1>
+    <p class="lead">Join our team of passionate volunteers dedicated to ethical governance in Africa</p>
+    <nav aria-label="breadcrumb" class="mt-3">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/">Get Involved</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Volunteer</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="container py-5">
+  <!-- Why Volunteer Section -->
+  <div class="row mb-5 pb-5">
+    <div class="col-lg-8 offset-lg-2">
+      <h2 class="section-title">Why Volunteer With Us?</h2>
+      <div class="row g-4 mt-3">
+        <div class="col-md-6 wow fadeInUp">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-heart"></i>
+            </div>
+            <h5>Make Real Impact</h5>
+            <p>Contribute your skills to projects that create meaningful change across Africa.</p>
+          </div>
+        </div>
+        <div class="col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <h5>Join a Community</h5>
+            <p>Be part of a global community of changemakers committed to ethical governance.</p>
+          </div>
+        </div>
+        <div class="col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h5>Develop Skills</h5>
+            <p>Gain valuable experience and professional development in your areas of interest.</p>
+          </div>
+        </div>
+        <div class="col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <i class="fas fa-globe"></i>
+            </div>
+            <h5>Flexible Opportunities</h5>
+            <p>Choose from various roles and time commitments that fit your schedule.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Volunteer Opportunities by Area -->
+  <div class="row mb-5 pb-5 border-top">
+    <div class="col-lg-8 offset-lg-2">
+      <h2 class="section-title mt-5">Volunteer Opportunity Areas</h2>
+      <div class="row g-4 mt-3">
+        <div class="col-md-6 wow fadeInUp">
+          <div class="opportunity-card">
+            <div class="opp-icon bg-primary">
+              <i class="fas fa-microscope"></i>
+            </div>
+            <h5>Research & Analysis</h5>
+            <p>Help us conduct research, analyze data, and gather insights on governance issues across Africa.</p>
+          </div>
+        </div>
+        <div class="col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+          <div class="opportunity-card">
+            <div class="opp-icon bg-success">
+              <i class="fas fa-bullhorn"></i>
+            </div>
+            <h5>Communications</h5>
+            <p>Assist with content creation, social media, communications strategy, and stakeholder engagement.</p>
+          </div>
+        </div>
+        <div class="col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+          <div class="opportunity-card">
+            <div class="opp-icon bg-info">
+              <i class="fas fa-laptop"></i>
+            </div>
+            <h5>Technology & Development</h5>
+            <p>Contribute technical expertise in web development, data analysis, or IT infrastructure.</p>
+          </div>
+        </div>
+        <div class="col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+          <div class="opportunity-card">
+            <div class="opp-icon bg-warning">
+              <i class="fas fa-chalkboard-user"></i>
+            </div>
+            <h5>Training & Capacity Building</h5>
+            <p>Deliver workshops, training programs, and educational content to partner organizations.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Form -->
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2">
+      <div class="card border-0 shadow-lg">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">Volunteer Application Form</h4>
+        </div>
+        <div class="card-body p-4">
+          <form method="post" class="needs-validation">
+            {% csrf_token %}
+            
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="id_full_name" class="form-label">Full Name *</label>
+                <input type="text" class="form-control{% if form.full_name.errors %} is-invalid{% endif %}" 
+                       id="id_full_name" name="full_name" required>
+                {% if form.full_name.errors %}
+                  <div class="invalid-feedback">{{ form.full_name.errors.0 }}</div>
+                {% endif %}
+              </div>
+              <div class="col-md-6">
+                <label for="id_email" class="form-label">Email Address *</label>
+                <input type="email" class="form-control{% if form.email.errors %} is-invalid{% endif %}" 
+                       id="id_email" name="email" required>
+                {% if form.email.errors %}
+                  <div class="invalid-feedback">{{ form.email.errors.0 }}</div>
+                {% endif %}
+              </div>
+              <div class="col-md-6">
+                <label for="id_phone_number" class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" id="id_phone_number" name="phone_number">
+              </div>
+              <div class="col-md-6">
+                <label for="id_area_of_interest" class="form-label">Area of Interest *</label>
+                <select class="form-select{% if form.area_of_interest.errors %} is-invalid{% endif %}" 
+                        id="id_area_of_interest" name="area_of_interest" required>
+                  <option value="">-- Select an area --</option>
+                  <option value="research">Research & Analysis</option>
+                  <option value="communications">Communications</option>
+                  <option value="technology">Technology & Development</option>
+                  <option value="training">Training & Capacity Building</option>
+                  <option value="other">Other</option>
+                </select>
+                {% if form.area_of_interest.errors %}
+                  <div class="invalid-feedback d-block">{{ form.area_of_interest.errors.0 }}</div>
+                {% endif %}
+              </div>
+              <div class="col-12">
+                <label for="id_motivation" class="form-label">Why do you want to volunteer with us? *</label>
+                <textarea class="form-control{% if form.motivation.errors %} is-invalid{% endif %}" 
+                          id="id_motivation" name="motivation" rows="5" required 
+                          placeholder="Tell us about your passion for ethical governance and what motivates you to volunteer..."></textarea>
+                {% if form.motivation.errors %}
+                  <div class="invalid-feedback d-block">{{ form.motivation.errors.0 }}</div>
+                {% endif %}
+              </div>
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="agree_terms" required>
+                  <label class="form-check-label" for="agree_terms">
+                    I agree to the volunteer code of conduct and privacy policy *
+                  </label>
+                </div>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary btn-lg w-100">Submit Application</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Volunteer Testimonials -->
+  <div class="row mt-5 pt-5 border-top">
+    <div class="col-lg-8 offset-lg-2">
+      <h2 class="section-title">Meet Our Volunteers</h2>
+      <div class="row g-4 mt-3">
+        <div class="col-md-6 wow fadeInUp">
+          <div class="testimonial-card">
+            <div class="stars">
+              <i class="fas fa-star text-warning"></i>
+              <i class="fas fa-star text-warning"></i>
+              <i class="fas fa-star text-warning"></i>
+              <i class="fas fa-star text-warning"></i>
+              <i class="fas fa-star text-warning"></i>
+            </div>
+            <p class="quote">"Volunteering with AfriEthics has been transformative. I've gained skills while making a real difference in governance across Africa."</p>
+            <p class="author">- <strong>Amara Okoye</strong>, Research Volunteer</p>
+          </div>
+        </div>
+        <div class="col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+          <div class="testimonial-card">
+            <div class="stars">
+              <i class="fas fa-star text-warning"></i>
+              <i class="fas fa-star text-warning"></i>
+              <i class="fas fa-star text-warning"></i>
+              <i class="fas fa-star text-warning"></i>
+              <i class="fas fa-star text-warning"></i>
+            </div>
+            <p class="quote">"The team is incredibly supportive. As a remote volunteer from Kenya, I felt like part of the family from day one."</p>
+            <p class="author">- <strong>David Kipchoge</strong>, Communications Volunteer</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ Section -->
+  <div class="row mt-5 pt-5 border-top">
+    <div class="col-lg-8 offset-lg-2">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <div class="accordion mt-4" id="faqAccordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+              Do I need prior experience to volunteer?
+            </button>
+          </h2>
+          <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              No prior experience is required! We welcome volunteers from all backgrounds. We provide training and mentorship to help you succeed in your role.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+              How much time commitment is required?
+            </button>
+          </h2>
+          <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              We offer flexible arrangements. You can commit anywhere from a few hours per week to full-time. We'll work with you to find a schedule that fits your availability.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+              Can I volunteer remotely?
+            </button>
+          </h2>
+          <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              Absolutely! Many of our volunteer positions can be done remotely. We have team members working with us from across Africa and beyond.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+              What happens after I submit my application?
+            </button>
+          </h2>
+          <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              We review all applications and contact promising candidates within 1-2 weeks. We'll discuss your interests, skills, and availability to find the best fit.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+              Is there any cost to volunteer?
+            </button>
+          </h2>
+          <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              No, volunteering with AfriEthics is completely free. If you incur any expenses related to your volunteer work, we'll discuss reimbursement options.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Continue to Get Involved -->
+  <div class="row mt-5 pt-5 border-top">
+    <div class="col-lg-8 offset-lg-2 text-center">
+      <h3>Other Ways to Get Involved</h3>
+      <p class="text-muted mt-2">Explore more opportunities to support our mission</p>
+      <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
+        <a href="/partner/" class="btn btn-outline-primary">Partner With Us</a>
+        <a href="/donate/" class="btn btn-primary">Make a Donation</a>
+        <a href="/contact/" class="btn btn-outline-primary">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .page-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 4rem 0;
+    margin-bottom: 3rem;
+  }
+
+  .page-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+
+  .page-header .lead {
+    font-size: 1.3rem;
+    margin-top: 0.5rem;
+  }
+
+  .breadcrumb {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+  }
+
+  .breadcrumb-item a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+  }
+
+  .breadcrumb-item a:hover {
+    color: white;
+  }
+
+  .breadcrumb-item.active {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 0;
+  }
+
+  .feature-card {
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .feature-card:hover {
+    background: white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+  }
+
+  .feature-icon {
+    font-size: 2.5rem;
+    color: #667eea;
+    margin-bottom: 1rem;
+  }
+
+  .feature-card h5 {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-card p {
+    color: #7f8c8d;
+    margin-bottom: 0;
+  }
+
+  .opportunity-card {
+    padding: 2rem;
+    background: white;
+    border-left: 4px solid #667eea;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+  }
+
+  .opportunity-card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+  }
+
+  .opp-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .opportunity-card h5 {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .opportunity-card p {
+    color: #7f8c8d;
+    margin-bottom: 0;
+  }
+
+  .testimonial-card {
+    padding: 2rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  }
+
+  .stars {
+    margin-bottom: 1rem;
+  }
+
+  .testimonial-card .quote {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #2c3e50;
+    font-style: italic;
+    margin-bottom: 1rem;
+  }
+
+  .testimonial-card .author {
+    color: #7f8c8d;
+    margin-bottom: 0;
+  }
+
+  .accordion-button:not(.collapsed) {
+    background-color: #667eea;
+    color: white;
+  }
+
+  .accordion-button:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+  }
+</style>
+
+{% endblock %}

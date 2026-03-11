@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Our Founders · {{ site_settings.name|default:"AfriEthics Initiative" }}{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<div class="page-header">
+  <div class="container">
+    <h1>Our Founders</h1>
+    <nav aria-label="breadcrumb" class="mt-3">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/about/">About Us</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Our Founders</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="container py-5">
+  <div class="text-center mb-5 wow fadeInUp">
+    <h2 class="section-title">Meet Our Founders</h2>
+    <p class="section-subtitle">Visionary leaders dedicated to ethical governance in Africa</p>
+  </div>
+
+  <div class="row g-4">
+    {% if founders %}
+      {% for founder in founders %}
+        <div class="col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.{% forloop.counter %}s">
+          <div class="card h-100 border-0 shadow">
+            {% if founder.photo %}
+              <img src="{{ founder.photo.url }}" alt="{{ founder.name }}" class="card-img-top" style="height: 400px; object-fit: cover;">
+            {% else %}
+              <div style="height: 400px; background: linear-gradient(135deg, #0B3A75 0%, #1F5FBF 100%);"></div>
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ founder.name }}</h5>
+              <p class="text-primary fw-bold">{{ founder.title }}</p>
+              {% if founder.certification %}<p class="small text-muted">{{ founder.certification }}</p>{% endif %}
+              <p class="card-text">{{ founder.bio|safe|truncatewords:30 }}</p>
+              <div class="d-flex gap-2">
+                {% if founder.linkedin_url %}<a href="{{ founder.linkedin_url }}" target="_blank" class="btn btn-sm btn-outline-primary"><i class="fab fa-linkedin-in"></i></a>{% endif %}
+                {% if founder.twitter_url %}<a href="{{ founder.twitter_url }}" target="_blank" class="btn btn-sm btn-outline-primary"><i class="fab fa-twitter"></i></a>{% endif %}
+                {% if founder.email %}<a href="mailto:{{ founder.email }}" class="btn btn-sm btn-outline-primary"><i class="fas fa-envelope"></i></a>{% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="col-12">
+        <p class="alert alert-info">Founder information coming soon.</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

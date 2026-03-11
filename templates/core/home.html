@@ -1,0 +1,246 @@
+{% extends "base.html" %}
+
+{% block title %}Home · {{ site_settings.name|default:"AfriEthics Initiative" }}{% endblock %}
+
+{% block content %}
+
+<!-- Hero Carousel Start -->
+<div class="container-fluid p-0 mb-5">
+  {% if hero_slides %}
+    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        {% for slide in hero_slides %}
+          <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %}></button>
+        {% endfor %}
+      </div>
+      <div class="carousel-inner">
+        {% for slide in hero_slides %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}" {% if slide.image %}style="background-image: url('{{ slide.image.url }}'); background-size: cover; background-position: center; min-height: 500px;"{% else %}style="background: linear-gradient(135deg, #0B3A75 0%, #1F5FBF 100%); min-height: 500px;"{% endif %}>
+            <div class="carousel-caption d-flex align-items-center justify-content-center h-100">
+              <div class="text-white text-center" style="background: rgba(11, 59, 117, 0.31); padding: 3rem; border-radius: 10px;">
+                <h1 class="display-4 mb-3 animated slideInDown">{{ slide.headline }}</h1>
+                {% if slide.subheadline %}<p class="fs-5 mb-4 animated slideInDown">{{ slide.subheadline }}</p>{% endif %}
+                {% if slide.cta_url and slide.cta_label %}<a class="btn btn-primary btn-lg animated slideInDown" href="{{ slide.cta_url }}">{{ slide.cta_label }}</a>{% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+  {% else %}
+    <div class="hero-section">
+      <div class="container text-center">
+        <h1 class="display-3 mb-4">Rooted in Values. Rising with purpose</h1>
+        <p class="fs-5 mb-4">We believe ethical principles guide every decision, building trust and fostering respect in all we do.</p>
+        <a class="btn btn-light btn-lg me-2" href="/about/">Learn More About Us</a>
+        <a class="btn btn-outline-light btn-lg" href="/donate/">Support Our Mission</a>
+      </div>
+    </div>
+  {% endif %}
+</div>
+<!-- Hero Carousel End -->
+
+<!-- About Section Start -->
+<div class="container py-5">
+  <div class="row g-4 align-items-center">
+    <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+      <div class="position-relative">
+        <div class="bg-light rounded p-4 h-100">
+          <h2 class="h4 mb-3">About AfriEthics Initiative</h2>
+          <p>Our commitment to ethical standards shapes our purpose and inspires us to lead with honesty and accountability across the African continent.</p>
+          <p>AfriEthics is dedicated to promoting transparency, integrity, and good governance in public and private institutions across Africa.</p>
+          <a class="btn btn-primary" href="/about/">Read Our Full Story →</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
+      <div class="bg-primary text-white rounded p-4 h-100">
+        <h3 class="h5 mb-3">Our Mission</h3>
+        <p class="mb-4">To empower African youth and strengthen institutional integrity through values-based education, civic engagement, and ethical awareness, supported by innovative solutions that promote accountability and sustainable development.</p>
+        <h3 class="h5 mb-3">Our Vision</h3>
+        <p>A future where a new generation of African leaders leads ethically, with integrity, strengthening institutions for a just and sustainable society.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- About Section End -->
+
+<!-- Focus Areas Start -->
+{% if focus_areas %}
+  <div class="container-fluid bg-light py-5">
+    <div class="container">
+      <div class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+        <h2 class="section-title">Our Key Focus Areas</h2>
+        <p class="section-subtitle">We work on multiple fronts to build ethical societies</p>
+      </div>
+      <div class="row g-4">
+        {% for area in focus_areas %}
+          <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.{{ forloop.counter }}s">
+            <div class="card h-100 text-center">
+              <div class="card-body">
+                {% if area.icon %}<div class="fs-1 text-primary mb-3"><i class="fa-fw {{ area.icon }}"></i></div>{% endif %}
+                <h5 class="card-title">{{ area.name }}</h5>
+                <p class="card-text">{{ area.description }}</p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endif %}
+<!-- Focus Areas End -->
+
+<!-- Impact Statistics Start -->
+{% if impact_metrics %}
+  <div class="container py-5">
+    <div class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+      <h2 class="section-title">Our Impact</h2>
+      <p class="section-subtitle">Making a real difference across Africa</p>
+    </div>
+    <div class="row g-4">
+      {% for metric in impact_metrics %}
+        <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.{{ forloop.counter }}s">
+          <div class="card bg-primary text-white text-center h-100">
+            <div class="card-body">
+              {% if metric.icon %}<div class="fs-2 mb-3"><i class="{{ metric.icon }}"></i></div>{% endif %}
+              <h3 class="card-title h2">{{ metric.value }}</h3>
+              <p class="card-text">{{ metric.name }}</p>
+              {% if metric.description %}<small>{{ metric.description }}</small>{% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+<!-- Impact Statistics End -->
+
+<!-- Featured Programs Start -->
+{% if programs %}
+  <div class="container-fluid bg-light py-5">
+    <div class="container">
+      <div class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+        <h2 class="section-title">Our Programs</h2>
+        <p class="section-subtitle">Comprehensive initiatives for ethical transformation</p>
+      </div>
+      <div class="row g-4">
+        {% for program in programs|slice:":3" %}
+          <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.{{ forloop.counter }}s">
+            <div class="card h-100">
+              {% if program.image %}<img src="{{ program.image.url }}" alt="{{ program.title }}" class="card-img-top" style="height: 250px; object-fit: cover;">{% else %}<div style="height: 250px; background: linear-gradient(135deg, #0B3A75 0%, #1F5FBF 100%);"></div>{% endif %}
+              <div class="card-body">
+                <h5 class="card-title">{{ program.title }}</h5>
+                <p class="card-text">{{ program.summary|default:program.description|truncatechars:150 }}</p>
+                <a href="{{ program.get_absolute_url }}" class="btn btn-outline-primary">Learn More →</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="text-center mt-4 wow fadeInUp" data-wow-delay="0.5s">
+        <a href="/programs/" class="btn btn-primary btn-lg">View All Programs</a>
+      </div>
+    </div>
+  </div>
+{% endif %}
+<!-- Featured Programs End -->
+
+<!-- Latest News Start -->
+{% if latest_posts %}
+  <div class="container py-5">
+    <div class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+      <h2 class="section-title">Latest News & Updates</h2>
+      <p class="section-subtitle">Stay informed about our latest initiatives and insights</p>
+    </div>
+    <div class="row g-4">
+      {% for post in latest_posts|slice:":3" %}
+        <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.{{ forloop.counter }}s">
+          <div class="card h-100">
+            {% if post.cover_image %}<img src="{{ post.cover_image.url }}" alt="{{ post.title }}" class="card-img-top" style="height: 200px; object-fit: cover;">{% else %}<div style="height: 200px; background: #e9ecef;"></div>{% endif %}
+            <div class="card-body">
+              <small class="text-muted"><i class="bi bi-calendar"></i> {{ post.published_at|date:"M j, Y" }}</small>
+              <h5 class="card-title mt-2">{{ post.title }}</h5>
+              <p class="card-text">{{ post.excerpt|default:post.content|truncatechars:120|striptags }}</p>
+              <a href="{{ post.get_absolute_url }}" class="btn btn-sm btn-outline-primary">Read More →</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    <div class="text-center mt-4 wow fadeInUp" data-wow-delay="0.5s">
+      <a href="/blog/" class="btn btn-primary btn-lg">View All News</a>
+    </div>
+  </div>
+{% endif %}
+<!-- Latest News End -->
+
+<!-- Testimonials Start -->
+{% if testimonials %}
+  <div class="container-fluid bg-light py-5">
+    <div class="container">
+      <div class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+        <h2 class="section-title">What People Say</h2>
+        <p class="section-subtitle">Hear from our partners and beneficiaries</p>
+      </div>
+      <div class="row g-4">
+        {% for testimonial in testimonials|slice:":3" %}
+          <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.{{ forloop.counter }}s">
+            <div class="card bg-white border-0 h-100">
+              <div class="card-body">
+                <div class="mb-3">
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                  <i class="fas fa-star text-warning"></i>
+                </div>
+                <p class="card-text">"{{ testimonial.quote }}"</p>
+              </div>
+              <div class="card-footer bg-transparent border-top">
+                <div class="d-flex align-items-center">
+                  {% if testimonial.author_photo %}<img src="{{ testimonial.author_photo.url }}" alt="{{ testimonial.author_name }}" class="rounded-circle me-3" style="width: 40px; height: 40px; object-fit: cover;">{% else %}<div class="rounded-circle me-3" style="width: 40px; height: 40px; background: #ddd;"></div>{% endif %}
+                  <div>
+                    <strong>{{ testimonial.author_name }}</strong>
+                    {% if testimonial.author_title %}<br><small class="text-muted">{{ testimonial.author_title }}</small>{% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endif %}
+<!-- Testimonials End -->
+
+<!-- Call to Action Start -->
+<div class="container-fluid bg-primary text-white py-5">
+  <div class="container text-center">
+    <div class="wow fadeInUp" data-wow-delay="0.1s">
+      <h2 class="display-5 mb-4">Join Us in Our Mission</h2>
+      <p class="fs-5 mb-4">Support ethical governance and transparency across Africa. Every contribution makes a difference.</p>
+      <div>
+        <a class="btn btn-light btn-lg me-2 mb-2" href="/donate/">
+          <i class="fas fa-heart me-2"></i>Donate Now
+        </a>
+        <a class="btn btn-outline-light btn-lg me-2 mb-2" href="/partner/">
+          <i class="fas fa-handshake me-2"></i>Partner With Us
+        </a>
+        <a class="btn btn-outline-light btn-lg mb-2" href="/volunteer/">
+          <i class="fas fa-users me-2"></i>Get Involved
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Call to Action End -->
+
+{% endblock %}

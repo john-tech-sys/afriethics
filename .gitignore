@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.pyo
+*.pdb
+*.egg-info/
+.eggs/
+
+# Environments
+.venv/
+venv/
+ENV/
+
+# Django
+*.sqlite3
+/staticfiles/
+/media/
+
+# Local settings / secrets
+.env
+
+# VS Code (ignore workspace clutter but keep shared settings)
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+
+{% block title %}About Us · {{ site_settings.name|default:"AfriEthics Initiative" }}{% endblock %}
+
+{% block content %}
+
+<!-- Page Header Start -->
+<div class="container-fluid bg-primary text-white py-5">
+  <div class="container text-center">
+    <h1 class="display-4 mb-3">About AfriEthics Initiative</h1>
+    <p class="fs-5">Our commitment to ethical standards shapes our purpose and inspires us to lead with honesty and accountability across the African continent.</p>
+  </div>
+</div>
+<!-- Page Header End -->
+
+<!-- Mission & Vision Start -->
+<div class="container py-5">
+  <div class="row g-4 align-items-center">
+    <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+      <h2 class="h3 mb-4">Our Mission</h2>
+      <p class="mb-3">To promote ethical governance, combat corruption, and empower communities through education and transparency initiatives across Africa.</p>
+      <p>We work tirelessly to build institutions and systems that prioritize integrity, accountability, and good governance, ensuring that ethical principles guide decisions at all levels of society.</p>
+    </div>
+    <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
+      <h2 class="h3 mb-4">Our Vision</h2>
+      <p class="mb-3">An Africa where integrity, transparency, and accountability are the foundation of all institutions, creating societies where every citizen has the opportunity to thrive.</p>
+      <p>We envision a continent where ethical leadership is the norm, corruption is eliminated, and communities are empowered to hold their institutions accountable for serving the public good.</p>
+    </div>
+  </div>
+</div>
+<!-- Mission & Vision End -->
+
+<!-- Our Values Start -->
+<div class="container-fluid py-5" style="background-color: #E8F0FB;">
+  <div class="container">
+    <div class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+      <h2 class="section-title">Our Core Values</h2>
+      <p class="section-subtitle">The principles that guide everything we do</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="card h-100 border-0 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title text-primary"><i class="fas fa-shield-alt me-2"></i>Integrity</h5>
+            <p class="card-text">We uphold the highest standards of honesty and moral principles in all our actions and decisions.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.2s">
+        <div class="card h-100 border-0 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title text-primary"><i class="fas fa-eye me-2"></i>Transparency</h5>
+            <p class="card-text">We believe in open communication and accountability, ensuring all stakeholders have access to information.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.3s">
+        <div class="card h-100 border-0 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title text-primary"><i class="fas fa-balance-scale me-2"></i>Fairness</h5>
+            <p class="card-text">We advocate for equitable treatment and justice for all, promoting inclusive governance and participation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Our Values End -->
+
+<!-- Founders Start -->
+{% if founders %}
+<div class="container py-5">
+  <div class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+    <h2 class="section-title">Our Founders</h2>
+    <p class="section-subtitle">Visionaries Leading Our Mission</p>
+  </div>
+  <div class="row g-4">
+    {% for founder in founders %}
+      <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.{{ forloop.counter }}s">
+        <div class="card h-100 border-0 shadow-sm text-center">
+          {% if founder.photo %}
+            <img src="{{ founder.photo.url }}" class="card-img-top" alt="{{ founder.name }}">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ founder.name }}</h5>
+            <p class="card-text text-muted small">{{ founder.title }}</p>
+            {% if founder.certification %}
+              <p class="card-text small"><em>{{ founder.certification }}</em></p>
+            {% endif %}
+            <p class="card-text">{{ founder.bio|safe|truncatewords_html:30 }}</p>
+            <div class="mt-3">
+              {% if founder.linkedin_url %}
+                <a href="{{ founder.linkedin_url }}" class="text-primary me-2" target="_blank">
+                  <i class="fab fa-linkedin"></i>
+                </a>
+              {% endif %}
+              {% if founder.twitter_url %}
+                <a href="{{ founder.twitter_url }}" class="text-primary" target="_blank">
+                  <i class="fab fa-twitter"></i>
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+<!-- Founders End -->
+
+<!-- Governance & Leadership Start -->
+<div class="container-fluid bg-light py-5">
+  <div class="container">
+    <div class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+      <h2 class="section-title">Governance & Leadership</h2>
+      <p class="section-subtitle">Our Board and Advisory Team</p>
+    </div>
+
+    <!-- Board Directors -->
+    {% if directors %}
+      <div class="mb-5">
+        <h3 class="h4 mb-4 text-center">Board of Directors</h3>
+        <div class="row g-4">
+          {% for member in directors %}
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.{{ forloop.counter }}s">
+              <div class="card h-100 border-0 shadow-sm">
+                {% if member.photo %}
+                  <img src="{{ member.photo.url }}" class="card-img-top" alt="{{ member.name }}">
+                {% endif %}
+                <div class="card-body">
+                  <h5 class="card-title">{{ member.name }}</h5>
+                  <p class="card-text text-primary fw-bold">{{ member.position }}</p>
+                  {% if member.expertise %}
+                    <p class="card-text small text-muted">{{ member.expertise }}</p>
+                  {% endif %}
+                  {% if member.linkedin_url %}
+                    <a href="{{ member.linkedin_url }}" class="text-primary small" target="_blank">
+                      <i class="fab fa-linkedin"></i> LinkedIn
+                    </a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+
+    <!-- Advisory Team -->
+    {% if advisors %}
+      <div class="mt-5 pt-5">
+        <h3 class="h4 mb-4 text-center">Advisory Team</h3>
+        <div class="row g-4">
+          {% for member in advisors %}
+            <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.{{ forloop.counter }}s">
+              <div class="card h-100 border-0 shadow-sm">
+                {% if member.photo %}
+                  <img src="{{ member.photo.url }}" class="card-img-top" alt="{{ member.name }}">
+                {% endif %}
+                <div class="card-body">
+                  <h5 class="card-title">{{ member.name }}</h5>
+                  <p class="card-text text-primary fw-bold">{{ member.position }}</p>
+                  {% if member.expertise %}
+                    <p class="card-text small text-muted">{{ member.expertise }}</p>
+                  {% endif %}
+                  {% if member.linkedin_url %}
+                    <a href="{{ member.linkedin_url }}" class="text-primary small" target="_blank">
+                      <i class="fab fa-linkedin"></i> LinkedIn
+                    </a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+<!-- Governance & Leadership End -->
+
+<!-- Transparency & Reports Start -->
+{% if annual_reports %}
+<div class="container py-5">
+  <div class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+    <h2 class="section-title">Transparency & Reports</h2>
+    <p class="section-subtitle">Demonstrating Our Commitment to Accountability</p>
+  </div>
+  <div class="row g-4">
+    {% for report in annual_reports %}
+      <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.{{ forloop.counter }}s">
+        <div class="card h-100 border-0 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">{{ report.title }}</h5>
+            <p class="card-text text-muted">{{ report.year }}</p>
+            {% if report.description %}
+              <p class="card-text">{{ report.description }}</p>
+            {% endif %}
+            {% if report.pdf_file %}
+              <a href="{{ report.pdf_file.url }}" class="btn btn-sm btn-primary" target="_blank">
+                <i class="fas fa-download me-1"></i>Download Report
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+<!-- Transparency & Reports End -->
+
+<!-- Call to Action Start -->
+<div class="container-fluid bg-primary text-white py-5">
+  <div class="container text-center">
+    <h2 class="h3 mb-4">Join Us in Our Mission</h2>
+    <p class="mb-4">Together, we can build more ethical and transparent societies across Africa.</p>
+    <div class="d-flex gap-3 justify-content-center flex-wrap">
+      <a class="btn btn-light" href="/volunteer/">Volunteer With Us</a>
+      <a class="btn btn-outline-light" href="/partner/">Become a Partner</a>
+      <a class="btn btn-outline-light" href="/donate/">Support Our Work</a>
+    </div>
+  </div>
+</div>
+<!-- Call to Action End -->
+
+{% endblock %}

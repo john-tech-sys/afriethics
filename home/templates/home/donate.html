@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static%}
+{% block title %} | Donate{% endblock %}
+
+{% block content %}
+<!-- inner page banner -->
+<div id="inner_banner" class="section inner_banner_section bg-dark">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="full">
+          <div class="title-holder">
+            <div class="title-holder-cell text-left">
+              <h1 class="page-title">Donate</h1>
+              <ol class="breadcrumb">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li class="active">Donate</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end inner page banner -->
+<!-- section -->
+<div class="section padding_layout_1 it_service_policy">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9">
+        <div class="row">
+          {%for disclaimer in disclaimers %}
+          <div class="col-md-12">
+            <div class="full">
+              <h3>{{disclaimer.title}}</h3>
+              <p>{{disclaimer.details}}</p>
+            </div>
+          </div>
+          {%endfor%}
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="side_bar">
+          <div class="side_bar_blog">
+            <h4>RECENT News</h4>
+            <div class="recent_post">
+              <ul>
+                {%for news in all_news%}
+                <li>
+                  <p class="post_head"><a href="{% url 'news_details' news.pk %}">{{news.title}}</a></p>
+                  <p class="post_date"><i class="fa fa-calendar" aria-hidden="true"></i>{{news.date_posted}}</p>
+                </li>
+                {%endfor%}
+              </ul>
+            </div>
+          </div>
+          <div class="side_bar_blog">
+            <h4>Services</h4>
+            <div class="categary">
+              <ul>
+                {%for service in services%}
+                <li><a href="{% url 'service_details' service.pk %}"><i class="fa fa-caret-right"></i>{{news.title}}</a></li>
+                {%endfor%}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end section -->
+{% endblock %}

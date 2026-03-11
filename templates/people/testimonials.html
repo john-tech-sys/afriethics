@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Testimonials · {{ site_settings.site_name|default:"AfriEthics" }}{% endblock %}
+
+{% block content %}
+  <h1 class="h3">Testimonials</h1>
+  <p class="text-muted">Trusted by citizens, educators, and organizations alike.</p>
+
+  {% for t in testimonials %}
+    <div class="border rounded p-3 mb-3">
+      <blockquote class="mb-1">“{{ t.quote }}”</blockquote>
+      <div class="small text-muted">— {{ t.author_name }}{% if t.author_title %}, {{ t.author_title }}{% endif %}</div>
+    </div>
+  {% empty %}
+    <p class="text-muted">No testimonials yet.</p>
+  {% endfor %}
+{% endblock %}

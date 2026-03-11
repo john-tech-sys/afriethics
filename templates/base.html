@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}{{ site_settings.name|default:"AfriEthics Initiative" }}{% endblock %}</title>
+    
+    <!-- Meta Tags -->
+    <meta name="description" content="{% block meta_description %}AfriEthics Initiative - Promoting ethical principles and governance in Africa{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}ethics, anti-corruption, youth empowerment, governance{% endblock %}">
+    
+    <!-- Favicon -->
+    <link href="{% if site_settings.favicon %}{{ site_settings.favicon.url }}{% else %}static/images/favicon.ico{% endif %}" rel="icon">
+    
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    
+    <!-- Animate CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    
+    <!-- Owl Carousel CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <style>
+      :root {
+        --primary: #0B3A75;
+        --primary-light: #1F5FBF;
+        --accent: #FFD200;
+        --accent-orange: #F57C00;
+        --white: #FFFFFF;
+        --light: #F5F7FA;
+        --soft-blue: #E8F0FB;
+        --dark: #333333;
+        
+        /* Bootstrap color variables override */
+        --bs-primary: #0B3A75;
+        --bs-primary-rgb: 11, 58, 117;
+        --bs-secondary: #E8F0FB;
+        --bs-secondary-rgb: 232, 240, 251;
+        --bs-body-color: #333333;
+        --bs-light: #F5F7FA;
+        --bs-dark: #0B3A75;
+      }
+      
+      body {
+        font-family: 'Inter', sans-serif;
+        color: var(--dark);
+        background-color: #F0F5FA;
+      }
+      
+      .navbar-brand {
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: white;
+      }
+      
+      .btn-primary {
+        background-color: var(--primary);
+        border-color: var(--primary);
+      }
+      
+      .btn-primary:hover {
+        background-color: var(--primary-light);
+        border-color: var(--primary-light);
+      }
+      
+      .top-bar {
+        background-color: var(--primary-light);
+        padding: 0.5rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.875rem;
+      }
+      
+      .page-header {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+        padding: 4rem 0;
+        margin-bottom: 2rem;
+      }
+      
+      .page-header h1 {
+        color: white;
+        font-weight: 700;
+      }
+      
+      .page-header .breadcrumb {
+        background-color: transparent;
+      }
+      
+      .page-header .breadcrumb-item.active {
+        color: var(--accent);
+      }
+      
+      .card {
+        border: none;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+      
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      }
+      
+      .hero-section {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+        color: white;
+        padding: 5rem 0;
+        min-height: 400px;
+        display: flex;
+        align-items: center;
+      }
+      
+      .footer {
+        background-color: var(--primary);
+        color: #fff;
+        padding: 3rem 0 1rem;
+        margin-top: 3rem;
+      }
+      
+      .footer h5 {
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: var(--accent);
+      }
+      
+      .footer a {
+        color: rgba(255,255,255,0.7);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      
+      .footer a:hover {
+        color: var(--accent);
+      }
+      
+      .social-links a {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        background-color: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        text-align: center;
+        line-height: 40px;
+        margin-right: 0.5rem;
+        transition: background-color 0.3s;
+      }
+      
+      .social-links a:hover {
+        background-color: var(--accent);
+        color: var(--primary);
+      }
+      
+      .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+      
+      .section-subtitle {
+        font-size: 1.1rem;
+        color: #666;
+        margin-bottom: 3rem;
+      }
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+  </head>
+
+  <body>
+    <!-- Top Bar Start -->
+    <div class="top-bar text-white-50 d-none d-lg-flex" style="background-color: #1F5FBF;">
+      <div>
+        {% if site_settings.phone %}<i class="fa fa-phone me-2"></i>{{ site_settings.phone }}{% endif %}
+        {% if site_settings.email %}<i class="fa fa-envelope ms-3 me-2"></i><a href="mailto:{{ site_settings.email }}" class="text-white-50">{{ site_settings.email }}</a>{% endif %}
+      </div>
+      <div>
+        <small>Follow us:</small>
+        {% if site_settings.facebook %}<a class="text-white-50 ms-3" href="{{ site_settings.facebook }}"><i class="fab fa-facebook-f"></i></a>{% endif %}
+        {% if site_settings.twitter %}<a class="text-white-50 ms-3" href="{{ site_settings.twitter }}"><i class="fab fa-twitter"></i></a>{% endif %}
+        {% if site_settings.instagram %}<a class="text-white-50 ms-3" href="{{ site_settings.instagram }}"><i class="fab fa-instagram"></i></a>{% endif %}
+        {% if site_settings.youtube %}<a class="text-white-50 ms-3" href="{{ site_settings.youtube }}"><i class="fab fa-youtube"></i></a>{% endif %}
+      </div>
+    </div>
+    <!-- Top Bar End -->
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm sticky-top" style="background-color: #0B3A75;">
+      <div class="container">
+        <a class="navbar-brand" href="/">
+          {% if site_settings.logo %}<img src="{{ site_settings.logo.url }}" alt="{{ site_settings.name }}" height="40" class="me-2">{% endif %}
+          {{ site_settings.name|default:"AfriEthics Initiative" }}
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-lg-2">
+            <!-- Main Navigation -->
+            <li class="nav-item"><a class="nav-link fw-500 px-2" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link fw-500 px-2" href="/about/">About Us</a></li>
+            <li class="nav-item"><a class="nav-link fw-500 px-2" href="/programs-impact/">Programs & Impact</a></li>
+            <li class="nav-item"><a class="nav-link fw-500 px-2" href="/news-resources/">News & Resources</a></li>
+            
+            <!-- Get Involved Dropdown -->
+            <li class="nav-item dropdown px-2">
+              <a class="nav-link dropdown-toggle fw-500" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Get Involved
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/volunteer/">Volunteer</a></li>
+                <li><a class="dropdown-item" href="/partner/">Partner With Us</a></li>
+                <li><a class="dropdown-item" href="/donate/">Donate</a></li>
+              </ul>
+            </li>
+
+            <!-- Divider -->
+            <li class="nav-item" style="border-left: 1px solid rgba(0,0,0,0.1); height: auto;"></li>
+
+            <!-- Secondary Navigation -->
+            <li class="nav-item"><a class="nav-link px-2" href="/contact/">Contact</a></li>
+            <li class="nav-item"><a class="btn text-white px-3 py-2 rounded-3" href="/donate/" style="background-color: #FFD200; color: #0B3A75 !important;">Donate Now</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <!-- Messages Start -->
+    <div class="container mt-0">
+      {% include "partials/messages.html" %}
+    </div>
+    <!-- Messages End -->
+
+    <!-- Main Content Start -->
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+    <!-- Main Content End -->
+
+    <!-- Footer Start -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-6 mb-4">
+            <h5>{{ site_settings.name|default:"AfriEthics Initiative" }}</h5>
+            <p class="small">{% if site_settings.address %}{{ site_settings.address }}{% else %}Building trust and promoting ethical governance across Africa.{% endif %}</p>
+            <div class="social-links">
+              {% if site_settings.facebook %}<a href="{{ site_settings.facebook }}" title="Facebook"><i class="fab fa-facebook-f"></i></a>{% endif %}
+              {% if site_settings.twitter %}<a href="{{ site_settings.twitter }}" title="Twitter"><i class="fab fa-twitter"></i></a>{% endif %}
+              {% if site_settings.instagram %}<a href="{{ site_settings.instagram }}" title="Instagram"><i class="fab fa-instagram"></i></a>{% endif %}
+              {% if site_settings.youtube %}<a href="{{ site_settings.youtube }}" title="YouTube"><i class="fab fa-youtube"></i></a>{% endif %}
+            </div>
+          </div>
+          
+          <div class="col-lg-3 col-md-6 mb-4">
+            <h5>Quick Links</h5>
+            <ul class="list-unstyled small">
+              <li><a href="/">Home</a></li>
+              <li><a href="/about/">About Us</a></li>
+              <li><a href="/programs/">Programs</a></li>
+              <li><a href="/impact/">Impact</a></li>
+              <li><a href="/contact/">Contact</a></li>
+            </ul>
+          </div>
+          
+          <div class="col-lg-3 col-md-6 mb-4">
+            <h5>Resources</h5>
+            <ul class="list-unstyled small">
+              <li><a href="/resources/">Research & Toolkits</a></li>
+              <li><a href="/blog/">News & Updates</a></li>
+              <li><a href="/events/">Events</a></li>
+              <li><a href="/volunteer/">Volunteer</a></li>
+            </ul>
+          </div>
+          
+          <div class="col-lg-3 col-md-6 mb-4">
+            <h5>Get In Touch</h5>
+            <ul class="list-unstyled small">
+              {% if site_settings.email %}<li><i class="fa fa-envelope me-2"></i><a href="mailto:{{ site_settings.email }}">{{ site_settings.email }}</a></li>{% endif %}
+              {% if site_settings.phone %}<li><i class="fa fa-phone me-2"></i>{{ site_settings.phone }}</li>{% endif %}
+              <li><i class="fa fa-map-marker-alt me-2"></i>{% if site_settings.address %}{{ site_settings.address }}{% else %}Africa{% endif %}</li>
+            </ul>
+          </div>
+        </div>
+        
+        <hr class="my-4">
+        
+        <div class="row align-items-center">
+          <div class="col-md-6 small text-center text-md-start mb-3 mb-md-0">
+            <p>&copy; {% now "Y" %} {{ site_settings.name|default:"AfriEthics Initiative" }}. All rights reserved.</p>
+          </div>
+          <div class="col-md-6 small text-center text-md-end">
+            <a href="/privacy/" class="text-white-50 me-3">Privacy Policy</a>
+            <a href="/terms/" class="text-white-50">Terms & Conditions</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- Footer End -->
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- WOW JS for scroll animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+    
+    <!-- Owl Carousel JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    
+    <!-- Custom Script -->
+    <script>
+      // Initialize WOW.js for scroll animations
+      new WOW().init();
+      
+      // Initialize Owl Carousel
+      $('.owl-carousel').owlCarousel({
+        loop: true,
+        margin: 30,
+        nav: true,
+        dots: true,
+        autoplay: true,
+        autoplayTimeout: 5000,
+        responsive: {
+          0: { items: 1 },
+          600: { items: 2 },
+          1000: { items: 3 }
+        }
+      });
+    </script>
+    
+    {% block extra_js %}{% endblock %}
+  </body>
+</html>
+

@@ -1,0 +1,130 @@
+
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+
+<!-- section -->
+<div class="section padding_layout_1">
+  <div class="container">
+    {% if partner %}
+    <div class="row">
+      <div class="col-md-12">
+        <div class="full">
+          <div class="main_heading text_align_center mt-5">
+            <span class="h2 text-dark font-weight-bold" >{{partner.name}}</span>
+            <p class="large">Let's grow together!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row about_blog">
+      <div class="col-lg-6 col-md-6 col-sm-12 about_cont_blog">
+        <div class="full text_align_left">
+          <p> {{ partner.content|safe }} </p>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12 about_feature_img padding_right_0">
+        <div class="full text_align_center d-flex flex-column"> <img class="img-responsive justify-content-center" src="{{partner.picture.url}}" alt="#" /> </div>
+      </div>
+    </div> 
+    <div class="row about_blog d-flex justify-content-center">
+      <div class="col-12">
+        <div class="full title large_bold_black text_align_center my-3">
+          <p>Click here to partner with us.</p>
+        </div>
+      </div>
+      <div class="subscribe-btn mr-4" data-aos="fade-left" data-aos-delay="400" data-aos-offset="0">
+          <a href="https://form.jotform.com/252381769398575" class="btn btn-gn"><i class="bi bi-file-text-fill" aria-hidden="true"></i> Open Form</a>
+      </div>
+      <div class="subscribe-btn" data-aos="fade-left" data-aos-delay="400" data-aos-offset="0">
+          <a href="https://agent.jotform.com/0198ec27d1ad7947a4cb97a5a2b89ba0401f" class="btn btn-gn"><i class="bi bi-chat-right-text" aria-hidden="true"></i> Chat with an agent</a>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-md-12">
+        <div class="full">
+          <div class="main_heading text_align_center">
+            <span class="h2 text-dark font-weight-bold" >Why Partner With Us</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row about_blog">
+      <div class="col-md-8">
+        <div class="full margin_bottom_30">
+          <div class="accordion border_circle">
+            <div class="bs-example">
+              <div class="panel-group" id="accordion">
+                {%for why in whys %}
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <p class="panel-title"><a data-toggle="collapse" data-parent="#accordion" href="#collapse{{why.id}}"><i class="fa fa-handshake" aria-hidden="true"></i>{{ why.name }}<i class="fa fa-angle-down"></i></a> </p>
+                  </div>
+                  <div id="collapse{{why.id}}" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                      <p>{{ why.description|safe }}</p>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="full">
+          <p>{{ partner.description|safe }}</p>
+          {% comment %} <p><a class="btn main_bt" href="#">Read More</a></p> {% endcomment %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+<!-- end section -->
+
+<!-- section -->
+<div class="section padding_layout_1">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="full">
+          <div class="main_heading text_align_center">
+            <span class="h2 text-dark font-weight-bold" >Areas of partnership</span>
+            <p class="large">Find the best fit for you!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+        {%for area in areas %}
+      <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+        <div class="full text_align_center margin_bottom_30">
+          <div class="center">
+            <div class="icon"> <img src="{{area.picture.url}}" alt="#" /> </div>
+          </div>
+          <h4 class="theme_color">{{area.name}}</h4>
+          <p>{{area.description|safe}}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div> 
+    <div class="row about_blog d-flex justify-content-center mb-3">
+      <div class="col-12">
+        <div class="full title large_bold_black text_align_center my-3">
+          <p>Click here to partner with us.</p>
+        </div>
+      </div>
+      <div class="subscribe-btn mr-4" data-aos="fade-left" data-aos-delay="400" data-aos-offset="0">
+          <a href="https://form.jotform.com/252381769398575" class="btn btn-gn"><i class="bi bi-file-text-fill" aria-hidden="true"></i> Open Form</a>
+      </div>
+      <div class="subscribe-btn" data-aos="fade-left" data-aos-delay="400" data-aos-offset="0">
+          <a href="https://agent.jotform.com/0198ec27d1ad7947a4cb97a5a2b89ba0401f" class="btn btn-gn"><i class="bi bi-chat-right-text" aria-hidden="true"></i> Chat with an agent</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end section -->
+{% endblock content %}

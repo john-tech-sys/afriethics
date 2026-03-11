@@ -1,0 +1,453 @@
+{% extends "base.html" %}
+
+{% block title %}Partner With Us · {{ site_settings.name|default:"AfriEthics Initiative" }}{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<div class="page-header">
+  <div class="container">
+    <h1>Strategic Partnerships</h1>
+    <p class="lead">Collaborate with us to advance ethical governance across Africa</p>
+    <nav aria-label="breadcrumb" class="mt-3">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/">Get Involved</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Partner With Us</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="container py-5">
+  <!-- Why Partner Section -->
+  <div class="row mb-5 pb-5">
+    <div class="col-lg-8 offset-lg-2">
+      <h2 class="section-title">Why Partner With AfriEthics?</h2>
+      <div class="row g-4 mt-3">
+        <div class="col-md-6 wow fadeInUp">
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <i class="fas fa-handshake"></i>
+            </div>
+            <h5>Strengthen Your Impact</h5>
+            <p>Combine resources and expertise to create greater impact on governance issues.</p>
+          </div>
+        </div>
+        <div class="col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <i class="fas fa-network-wired"></i>
+            </div>
+            <h5>Expand Your Network</h5>
+            <p>Access our network of partners, organizations, and experts across Africa and beyond.</p>
+          </div>
+        </div>
+        <div class="col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <i class="fas fa-lightbulb"></i>
+            </div>
+            <h5>Share Knowledge</h5>
+            <p>Collaborate on research, training, and capacity-building initiatives.</p>
+          </div>
+        </div>
+        <div class="col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+          <div class="benefit-card">
+            <div class="benefit-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <h5>Mutual Growth</h5>
+            <p>Build sustainable partnerships that benefit all parties and advance our shared mission.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Partnership Types -->
+  <div class="row mb-5 pb-5 border-top">
+    <div class="col-lg-8 offset-lg-2">
+      <h2 class="section-title mt-5">Partnership Models</h2>
+      <div class="row g-4 mt-3">
+        <div class="col-md-6 wow fadeInUp">
+          <div class="partnership-type">
+            <h5>Program Partnerships</h5>
+            <p>Co-develop and deliver governance training, research, or advocacy programs together.</p>
+            <ul class="list-unstyled">
+              <li><i class="fas fa-check text-success me-2"></i>Joint program design</li>
+              <li><i class="fas fa-check text-success me-2"></i>Co-branded initiatives</li>
+              <li><i class="fas fa-check text-success me-2"></i>Shared resources</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+          <div class="partnership-type">
+            <h5>Research Partnerships</h5>
+            <p>Collaborate on governance research, data analysis, and evidence generation.</p>
+            <ul class="list-unstyled">
+              <li><i class="fas fa-check text-success me-2"></i>Joint research projects</li>
+              <li><i class="fas fa-check text-success me-2"></i>Data sharing agreements</li>
+              <li><i class="fas fa-check text-success me-2"></i>Publications</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+          <div class="partnership-type">
+            <h5>Advocacy Partnerships</h5>
+            <p>Work together on policy advocacy, awareness campaigns, and systemic change.</p>
+            <ul class="list-unstyled">
+              <li><i class="fas fa-check text-success me-2"></i>Joint advocacy campaigns</li>
+              <li><i class="fas fa-check text-success me-2"></i>Policy engagement</li>
+              <li><i class="fas fa-check text-success me-2"></i>Coalition building</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+          <div class="partnership-type">
+            <h5>Institutional Partnerships</h5>
+            <p>Strategic alliances with educational institutions, governments, and international organizations.</p>
+            <ul class="list-unstyled">
+              <li><i class="fas fa-check text-success me-2"></i>Academic collaboration</li>
+              <li><i class="fas fa-check text-success me-2"></i>Government engagement</li>
+              <li><i class="fas fa-check text-success me-2"></i>International cooperation</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Partner Application Form -->
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2">
+      <div class="card border-0 shadow-lg">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">Partnership Proposal Form</h4>
+        </div>
+        <div class="card-body p-4">
+          <p class="text-muted mb-4">Tell us about your organization and how we can partner together to advance ethical governance.</p>
+          <form method="post" class="needs-validation">
+            {% csrf_token %}
+            
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="id_organization_name" class="form-label">Organization Name *</label>
+                <input type="text" class="form-control{% if form.organization_name.errors %} is-invalid{% endif %}" 
+                       id="id_organization_name" name="organization_name" required>
+                {% if form.organization_name.errors %}
+                  <div class="invalid-feedback">{{ form.organization_name.errors.0 }}</div>
+                {% endif %}
+              </div>
+              <div class="col-md-6">
+                <label for="id_contact_person" class="form-label">Contact Person *</label>
+                <input type="text" class="form-control{% if form.contact_person.errors %} is-invalid{% endif %}" 
+                       id="id_contact_person" name="contact_person" required>
+                {% if form.contact_person.errors %}
+                  <div class="invalid-feedback">{{ form.contact_person.errors.0 }}</div>
+                {% endif %}
+              </div>
+              <div class="col-md-6">
+                <label for="id_email" class="form-label">Email Address *</label>
+                <input type="email" class="form-control{% if form.email.errors %} is-invalid{% endif %}" 
+                       id="id_email" name="email" required>
+                {% if form.email.errors %}
+                  <div class="invalid-feedback">{{ form.email.errors.0 }}</div>
+                {% endif %}
+              </div>
+              <div class="col-md-6">
+                <label for="id_phone_number" class="form-label">Phone Number</label>
+                <input type="tel" class="form-control" id="id_phone_number" name="phone_number">
+              </div>
+              <div class="col-12">
+                <label for="id_collaboration_type" class="form-label">Type of Partnership *</label>
+                <select class="form-select{% if form.collaboration_type.errors %} is-invalid{% endif %}" 
+                        id="id_collaboration_type" name="collaboration_type" required>
+                  <option value="">-- Select partnership type --</option>
+                  <option value="program">Program Partnership</option>
+                  <option value="research">Research Partnership</option>
+                  <option value="advocacy">Advocacy Partnership</option>
+                  <option value="institutional">Institutional Partnership</option>
+                  <option value="other">Other</option>
+                </select>
+                {% if form.collaboration_type.errors %}
+                  <div class="invalid-feedback d-block">{{ form.collaboration_type.errors.0 }}</div>
+                {% endif %}
+              </div>
+              <div class="col-12">
+                <label for="id_message" class="form-label">Your Partnership Proposal *</label>
+                <textarea class="form-control{% if form.message.errors %} is-invalid{% endif %}" 
+                          id="id_message" name="message" rows="6" required 
+                          placeholder="Describe your organization, your interest in partnership, and your specific proposal..."></textarea>
+                {% if form.message.errors %}
+                  <div class="invalid-feedback d-block">{{ form.message.errors.0 }}</div>
+                {% endif %}
+              </div>
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="agree_terms" required>
+                  <label class="form-check-label" for="agree_terms">
+                    I agree to discuss partnership under confidentiality and share organization information *
+                  </label>
+                </div>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary btn-lg w-100">Submit Partnership Proposal</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Partner Stories / Case Studies -->
+  <div class="row mt-5 pt-5 border-top">
+    <div class="col-lg-8 offset-lg-2">
+      <h2 class="section-title">Success Stories: Our Partners</h2>
+      <p class="text-muted">Examples of the impact we've created together with our partners</p>
+      <div class="row g-4 mt-3">
+        <div class="col-md-6 wow fadeInUp">
+          <div class="partner-story">
+            <h5>Youth Empowerment Initiative</h5>
+            <p class="partner-org text-primary"><small>In partnership with Global Youth Network</small></p>
+            <p>Together, we developed and delivered governance training to 5,000+ young leaders across 8 African countries, building a new generation of ethical decision-makers.</p>
+            <a href="/impact/" class="btn btn-sm btn-outline-primary">Read Full Story</a>
+          </div>
+        </div>
+        <div class="col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+          <div class="partner-story">
+            <h5>Anti-Corruption Research Initiative</h5>
+            <p class="partner-org text-primary"><small>In partnership with African States University</small></p>
+            <p>Our joint research project produced groundbreaking findings on corruption trends in African governance, influencing policy decisions across multiple countries.</p>
+            <a href="/resources/" class="btn btn-sm btn-outline-primary">View Research</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Partnership Requirements FAQ -->
+  <div class="row mt-5 pt-5 border-top">
+    <div class="col-lg-8 offset-lg-2">
+      <h2 class="section-title">Partnership FAQs</h2>
+      <div class="accordion mt-4" id="partnerFaqAccordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#pfaq1">
+              What size organization can partner with AfriEthics?
+            </button>
+          </h2>
+          <div id="pfaq1" class="accordion-collapse collapse show" data-bs-parent="#partnerFaqAccordion">
+            <div class="accordion-body">
+              We welcome partnerships with organizations of all sizes - from grassroots NGOs to large international institutions. What matters most is shared commitment to ethical governance.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pfaq2">
+              What is the typical timeline for partnership development?
+            </button>
+          </h2>
+          <div id="pfaq2" class="accordion-collapse collapse" data-bs-parent="#partnerFaqAccordion">
+            <div class="accordion-body">
+              After submission, we review proposals and contact qualified partners within 2-3 weeks. Initial discussions typically take 1-2 months, followed by formal partnership agreement development.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pfaq3">
+              Are financial contributions required for partnership?
+            </button>
+          </h2>
+          <div id="pfaq3" class="accordion-collapse collapse" data-bs-parent="#partnerFaqAccordion">
+            <div class="accordion-body">
+              Not necessarily. Partnerships can be based on resource sharing, expertise exchange, or joint program delivery. We're open to various models depending on mutual capacity and interests.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pfaq4">
+              What does the partnership agreement include?
+            </button>
+          </h2>
+          <div id="pfaq4" class="accordion-collapse collapse" data-bs-parent="#partnerFaqAccordion">
+            <div class="accordion-body">
+              Partnership agreements typically include roles and responsibilities, resource commitments, timeline, deliverables, communication protocols, and mechanisms for resolving disputes. Each is customized to the partnership.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pfaq5">
+              Can we do a pilot project before committing to long-term partnership?
+            </button>
+          </h2>
+          <div id="pfaq5" class="accordion-collapse collapse" data-bs-parent="#partnerFaqAccordion">
+            <div class="accordion-body">
+              Yes! We often recommend pilot projects as a way to test collaboration models and build trust. This helps ensure both organizations are well-suited for long-term partnership.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Continue to Get Involved -->
+  <div class="row mt-5 pt-5 border-top">
+    <div class="col-lg-8 offset-lg-2 text-center">
+      <h3>Other Ways to Engage</h3>
+      <p class="text-muted mt-2">Explore other opportunities to support our mission</p>
+      <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
+        <a href="/volunteer/" class="btn btn-outline-primary">Become a Volunteer</a>
+        <a href="/donate/" class="btn btn-primary">Make a Donation</a>
+        <a href="/contact/" class="btn btn-outline-primary">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .page-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 4rem 0;
+    margin-bottom: 3rem;
+  }
+
+  .page-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+
+  .page-header .lead {
+    font-size: 1.3rem;
+    margin-top: 0.5rem;
+  }
+
+  .breadcrumb {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+  }
+
+  .breadcrumb-item a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+  }
+
+  .breadcrumb-item a:hover {
+    color: white;
+  }
+
+  .breadcrumb-item.active {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 0;
+  }
+
+  .benefit-card {
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .benefit-card:hover {
+    background: white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+  }
+
+  .benefit-icon {
+    font-size: 2.5rem;
+    color: #667eea;
+    margin-bottom: 1rem;
+  }
+
+  .benefit-card h5 {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .benefit-card p {
+    color: #7f8c8d;
+    margin-bottom: 0;
+  }
+
+  .partnership-type {
+    padding: 2rem;
+    background: white;
+    border-left: 4px solid #667eea;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+  }
+
+  .partnership-type:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+  }
+
+  .partnership-type h5 {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .partnership-type p {
+    color: #7f8c8d;
+    margin-bottom: 1rem;
+  }
+
+  .partnership-type ul li {
+    margin-bottom: 0.5rem;
+    color: #555;
+  }
+
+  .partner-story {
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border-top: 4px solid #667eea;
+  }
+
+  .partner-story h5 {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .partner-org {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .partner-story p {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .accordion-button:not(.collapsed) {
+    background-color: #667eea;
+    color: white;
+  }
+
+  .accordion-button:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+  }
+</style>
+
+{% endblock %}

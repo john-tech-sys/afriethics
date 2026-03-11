@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }} · {{ site_settings.site_name|default:"AfriEthics" }}{% endblock %}
+
+{% block content %}
+  <h1 class="h3">{{ page.title }}</h1>
+  {% if page.summary %}<p class="lead">{{ page.summary }}</p>{% endif %}
+  <div class="mt-3">{{ page.body|safe }}</div>
+{% endblock %}

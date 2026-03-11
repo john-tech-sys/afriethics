@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Team · {{ site_settings.site_name|default:"AfriEthics" }}{% endblock %}
+
+{% block content %}
+  <h1 class="h3">Our Team</h1>
+  <p class="text-muted">Meet the people driving ethical leadership.</p>
+
+  {% if team %}
+    <div class="row g-3">
+      {% for member in team %}
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100">
+            {% if member.photo %}<img class="card-img-top" src="{{ member.photo.url }}" alt="" />{% endif %}
+            <div class="card-body">
+              <h2 class="h5 mb-1">{{ member.name }}</h2>
+              {% if member.role %}<div class="text-muted mb-2">{{ member.role }}</div>{% endif %}
+              {% if member.bio %}<p class="mb-0">{{ member.bio|truncatechars:220 }}</p>{% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-muted">No team members yet.</p>
+  {% endif %}
+{% endblock %}
