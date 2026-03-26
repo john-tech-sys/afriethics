@@ -1,4 +1,4 @@
-"""Django settings for afriethis project.
+"""Django settings for afriethics project.
 
 Generated manually (Django-like defaults) for this repository.
 
@@ -71,7 +71,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "afriethis.urls"
+ROOT_URLCONF = "afriethics.urls"
 
 TEMPLATES = [
     {
@@ -90,8 +90,8 @@ TEMPLATES = [
     }
 ]
 
-WSGI_APPLICATION = "afriethis.wsgi.application"
-ASGI_APPLICATION = "afriethis.asgi.application"
+WSGI_APPLICATION = "afriethics.wsgi.application"
+ASGI_APPLICATION = "afriethics.asgi.application"
 
 
 # DATABASES = {

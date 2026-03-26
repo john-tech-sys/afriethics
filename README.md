@@ -40,4 +40,4 @@ See [.env.example](.env.example). Typical production variables:
 
 - Static files are served via `whitenoise`.
 - Use `gunicorn` to run in production:
-  - `gunicorn afriethis.wsgi:application`
+  - `gunicorn afriethics.wsgi:application`

@@ -1,4 +1,4 @@
-"""URL configuration for afriethis project."""
+"""URL configuration for afriethics project."""
 
 from django.conf import settings
 from django.conf.urls.static import static

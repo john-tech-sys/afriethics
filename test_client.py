@@ -3,7 +3,7 @@ import os
 import sys
 import django
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "afriethis.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "afriethics.settings")
 sys.path.insert(0, os.path.dirname(__file__))
 django.setup()
 
