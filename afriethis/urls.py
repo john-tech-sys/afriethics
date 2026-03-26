@@ -12,7 +12,8 @@ urlpatterns = [
     path("blog/", include("blog.urls")),
     path("", include("people.urls")),
     path("", include("engagement.urls")),
-]
+    
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

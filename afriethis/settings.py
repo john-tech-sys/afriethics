@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/stable/ref/settings/
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 import dj_database_url
@@ -28,15 +29,15 @@ if env.bool("DJANGO_READ_DOT_ENV", default=False):
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # Prefer setting DJANGO_SECRET_KEY in your environment (or a .env you load externally).
-SECRET_KEY = env("DJANGO_SECRET_KEY", default="django-insecure-change-me")
+SECRET_KEY = env("DJANGO_SECRET_KEY", default="change-me")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool("DJANGO_DEBUG", default=True)
+DEBUG = env.bool("DJANGO_DEBUG", default=False)
 
 # Comma-separated hostnames, e.g. "example.com,.example.com,localhost,127.0.0.1"
 raw_allowed_hosts = env("DJANGO_ALLOWED_HOSTS", default="localhost,127.0.0.1")
-ALLOWED_HOSTS = [h.strip() for h in raw_allowed_hosts.split(",") if h.strip()]
-
+# ALLOWED_HOSTS = [h.strip() for h in raw_allowed_hosts.split(",") if h.strip()]
+ALLOWED_HOSTS = ['*']  # later you can restrict
 raw_csrf_trusted = env("DJANGO_CSRF_TRUSTED_ORIGINS", default="")
 CSRF_TRUSTED_ORIGINS = [o.strip() for o in raw_csrf_trusted.split(",") if o.strip()]
 
@@ -48,6 +49,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
+    "ckeditor",
 
     "core",
     "home",
@@ -91,6 +94,10 @@ WSGI_APPLICATION = "afriethis.wsgi.application"
 ASGI_APPLICATION = "afriethis.asgi.application"
 
 
+# DATABASES = {
+#     'default': dj_database_url.config(default='sqlite:///db.sqlite3')
+# }
+
 DATABASES = {
     "default": dj_database_url.config(
         default=f"sqlite:///{(BASE_DIR / 'db.sqlite3').as_posix()}",
@@ -124,14 +131,17 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 STATIC_URL = "static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [BASE_DIR / "static"]
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
-MEDIA_URL = "media/"
-MEDIA_ROOT = BASE_DIR / "media"
+TEMP = os.path.join(BASE_DIR, 'media/temp')
 
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Email (defaults to console; configure SMTP via env vars in production)
@@ -139,3 +149,8 @@ EMAIL_BACKEND = env("DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.c
 
 # Common security toggles (safe defaults for many PaaS deployments)
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
