@@ -11,15 +11,26 @@ https://docs.djangoproject.com/en/stable/ref/settings/
 
 from __future__ import annotations
 
-import os
+import os, mimetypes
 from pathlib import Path
-
+from decouple import config, Csv
 import dj_database_url
 import environ
 
+mimetypes.add_type("text/css", ".css", True)
 
+# mimetypes.add_type("text/js", ".js", True)
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+ENVIRONMENT = config('ENVIRONMENT', default='production')
+# SECURITY WARNING: don't run with debug turned on in production!
+if ENVIRONMENT == 'development':
+    DEBUG = True
+else:
+    DEBUG = False
+    
 env = environ.Env(
     DJANGO_DEBUG=(bool, True),
 )
@@ -31,15 +42,9 @@ if env.bool("DJANGO_READ_DOT_ENV", default=False):
 # Prefer setting DJANGO_SECRET_KEY in your environment (or a .env you load externally).
 SECRET_KEY = env("DJANGO_SECRET_KEY", default="change-me")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool("DJANGO_DEBUG", default=False)
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'afriethics.onrender.com', 'afriethics.org',]
 
-# Comma-separated hostnames, e.g. "example.com,.example.com,localhost,127.0.0.1"
-raw_allowed_hosts = env("DJANGO_ALLOWED_HOSTS", default="localhost,127.0.0.1")
-# ALLOWED_HOSTS = [h.strip() for h in raw_allowed_hosts.split(",") if h.strip()]
-ALLOWED_HOSTS = ['*']  # later you can restrict
-raw_csrf_trusted = env("DJANGO_CSRF_TRUSTED_ORIGINS", default="")
-CSRF_TRUSTED_ORIGINS = [o.strip() for o in raw_csrf_trusted.split(",") if o.strip()]
+CSRF_TRUSTED_ORIGINS = ['https://afriethics.onrender.com', 'https://afriethics.org', 'https://www.afriethics.org']
 
 
 INSTALLED_APPS = [
@@ -98,14 +103,26 @@ ASGI_APPLICATION = "afriethics.asgi.application"
 #     'default': dj_database_url.config(default='sqlite:///db.sqlite3')
 # }
 
+# DATABASES = {
+#     "default": dj_database_url.config(
+#         default=f"sqlite:///{(BASE_DIR / 'db.sqlite3').as_posix()}",
+#         conn_max_age=600,
+#         conn_health_checks=True,
+#     )
+# }
+
 DATABASES = {
-    "default": dj_database_url.config(
-        default=f"sqlite:///{(BASE_DIR / 'db.sqlite3').as_posix()}",
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
 }
 
+POSTGRES_LOCALLY = True
+
+if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
+    DATABASES['default'] = dj_database_url.parse(config('DATABASE_URL'))
+    
 
 AUTH_PASSWORD_VALIDATORS = [
     {
