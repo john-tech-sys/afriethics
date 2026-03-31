@@ -13,6 +13,7 @@ from .views import (
     AboutTransparencyView,
     ImpactView,
     ResourcesView,
+    health,
 )
 
 app_name = "core"
@@ -20,6 +21,7 @@ app_name = "core"
 urlpatterns = [
     path("", HomeView.as_view(), name="home"),
     
+    path('health', health, name='health'),
     # Consolidated pages
     path("about/", AboutView.as_view(), name="about"),
     path("news-resources/", NewsResourcesView.as_view(), name="news-resources"),

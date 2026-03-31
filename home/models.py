@@ -12,12 +12,6 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
 from ckeditor.fields import RichTextField
 from engagement.models import Partnership, WhyPartnerWithUs, AreasOfPartnership
-from django.http import HttpResponse
-
-
-
-def health(request):
-    return HttpResponse("OK")
 
 
 class Section(models.Model):

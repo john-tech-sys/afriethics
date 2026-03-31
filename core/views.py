@@ -9,6 +9,12 @@ from programs.models import Program, SuccessStory
 from engagement.models import Resource
 from home.models import HomepageHeroSlide, Page, AboutPage, AnnualReport
 from core.models import FocusArea, ImpactMetric
+from django.http import HttpResponse
+
+
+
+def health(request):
+    return HttpResponse("OK")
 
 
 class HomeView(TemplateView):
