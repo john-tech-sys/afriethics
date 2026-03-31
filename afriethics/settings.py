@@ -42,7 +42,7 @@ if env.bool("DJANGO_READ_DOT_ENV", default=False):
 # Prefer setting DJANGO_SECRET_KEY in your environment (or a .env you load externally).
 SECRET_KEY = env("DJANGO_SECRET_KEY", default="change-me")
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'afriethics.onrender.com', 'afriethics.org',]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'afriethics.onrender.com', 'afriethics.org', 'www.afriethics.org']
 
 CSRF_TRUSTED_ORIGINS = ['https://afriethics.onrender.com', 'https://afriethics.org', 'https://www.afriethics.org']
 
