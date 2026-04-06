@@ -26,7 +26,7 @@
   {% if programs %}
     <div class="row g-4">
       {% for program in programs %}
-        <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.{% forloop.counter %}s">
+        <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.{{ forloop.counter }}s">
           <div class="card h-100 shadow border-0">
             {% if program.image %}
               <img src="{{ program.image.url }}" alt="{{ program.title }}" class="card-img-top" style="height: 250px; object-fit: cover;">
