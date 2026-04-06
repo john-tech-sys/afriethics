@@ -26,7 +26,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 ENVIRONMENT = config('ENVIRONMENT', default='production')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+if ENVIRONMENT == 'development':
+    DEBUG = True
+else:
+    DEBUG = False
     
 env = environ.Env(
     DJANGO_DEBUG=(bool, True),
