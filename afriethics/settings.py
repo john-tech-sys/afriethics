@@ -54,7 +54,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
+    "django.contrib.sitemaps",
+    'storages',
     "ckeditor",
 
     "core",
@@ -148,17 +149,40 @@ USE_I18N = True
 
 USE_TZ = True
 
-STATIC_URL = "static/"
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [BASE_DIR / "static"]
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
+AWS_S3_ENDPOINT_URL = config("AWS_S3_ENDPOINT_URL")
+
+AWS_S3_REGION_NAME = "auto"
+AWS_DEFAULT_ACL = None
+AWS_S3_SIGNATURE_VERSION = "s3v4"
+
+# Folder inside bucket
+AWS_LOCATION = "media"
+
+if ENVIRONMENT == 'development':
+    STATIC_URL = "/static/"
+    MEDIA_URL = "/media/"
+    STATICFILES_DIRS = [BASE_DIR / "static"]
+    STATIC_ROOT = BASE_DIR / "staticfiles"
+    MEDIA_ROOT = BASE_DIR / "media"
+else:
+    STATIC_URL = "/static/"
+    STATICFILES_DIRS = [BASE_DIR / "static"]
+    STATIC_ROOT = BASE_DIR / "staticfiles"
+
+    DEFAULT_FILE_STORAGE = "helpers.cloudflare.storages.MediaFilesStorage"
+
+    MEDIA_URL = f"{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/{AWS_LOCATION}/"
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 TEMP = os.path.join(BASE_DIR, 'media/temp')
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Email (defaults to console; configure SMTP via env vars in production)
