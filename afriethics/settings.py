@@ -26,10 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 ENVIRONMENT = config('ENVIRONMENT', default='production')
 # SECURITY WARNING: don't run with debug turned on in production!
-if ENVIRONMENT == 'development':
-    DEBUG = True
-else:
-    DEBUG = False
+DEBUG = config('DEBUG', default=False, cast=bool)
     
 env = environ.Env(
     DJANGO_DEBUG=(bool, True),
@@ -155,9 +152,8 @@ AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
 AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
 AWS_S3_ENDPOINT_URL = config("AWS_S3_ENDPOINT_URL")
 
-AWS_S3_REGION_NAME = "auto"
-AWS_DEFAULT_ACL = None
-AWS_S3_SIGNATURE_VERSION = "s3v4"
+AWS_S3_REGION_NAME = ""  # Required for Cloudflare R2
+AWS_DEFAULT_ACL = "public-read"  # Adjust as needed
 
 # Folder inside bucket
 AWS_LOCATION = "media"
