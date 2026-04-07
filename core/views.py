@@ -17,7 +17,7 @@ from django.contrib.sitemaps import Sitemap
 
 class StaticViewSitemap(Sitemap):
     def items(self):
-        return ['home', 'about', 'contact']  # your URL names
+        return ['', 'about', 'contact']  # your URL names
 
     def location(self, item):
         return reverse(item)
