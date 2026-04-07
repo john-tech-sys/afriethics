@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from django.shortcuts import get_object_or_404
+from django.urls import reverse
 from django.views.generic import DetailView, ListView, TemplateView
 
 from blog.models import Post
@@ -10,8 +11,17 @@ from engagement.models import Resource
 from home.models import HomepageHeroSlide, Page, AboutPage, AnnualReport
 from core.models import FocusArea, ImpactMetric
 from django.http import HttpResponse
+from django.contrib.sitemaps import Sitemap
 
 
+
+class StaticViewSitemap(Sitemap):
+    def items(self):
+        return ['home', 'about', 'contact']  # your URL names
+
+    def location(self, item):
+        return reverse(item)
+    
 
 def health(request):
     return HttpResponse("OK")

@@ -1,5 +1,6 @@
 from django.urls import path
 
+from django.contrib.sitemaps.views import sitemap
 from .views import (
     HomeView, 
     PageDetailView,
@@ -15,12 +16,16 @@ from .views import (
     ResourcesView,
     health,
 )
+from core import views
 
+sitemaps = {
+    'static': views.StaticViewSitemap,
+}
 app_name = "core"
 
 urlpatterns = [
     path("", HomeView.as_view(), name="home"),
-    
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}),    
     path('health', health, name='health'),
     # Consolidated pages
     path("about/", AboutView.as_view(), name="about"),
