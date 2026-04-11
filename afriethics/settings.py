@@ -9,12 +9,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/stable/ref/settings/
 """
 
+from __future__ import annotations
+
 import os, mimetypes
 from pathlib import Path
 from decouple import config, Csv
 import dj_database_url
 import environ
-
 
 mimetypes.add_type("text/css", ".css", True)
 
@@ -38,7 +39,8 @@ if env.bool("DJANGO_READ_DOT_ENV", default=False):
     env.read_env(BASE_DIR / ".env")
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+# Prefer setting DJANGO_SECRET_KEY in your environment (or a .env you load externally).
+SECRET_KEY = env("DJANGO_SECRET_KEY", default="change-me")
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'afriethics.onrender.com', 'afriethics.org', 'www.afriethics.org']
 
@@ -154,7 +156,8 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# ==================== STORAGE CONFIGURATION ====================
+
+
 
 AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
@@ -211,6 +214,7 @@ else:
 
     STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/"
     MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/"
+
 
 # Email (defaults to console; configure SMTP via env vars in production)
 EMAIL_BACKEND = env("DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
