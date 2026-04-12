@@ -163,30 +163,32 @@ AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
 AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
 AWS_S3_ENDPOINT_URL = config("AWS_S3_ENDPOINT_URL")          # e.g. https://xxx.r2.cloudflarestorage.com
-AWS_S3_SIGNATURE_VERSION = "s3v4"
-AWS_S3_ADDRESSING_STYLE = "virtual"
-AWS_QUERYSTRING_AUTH = False
-AWS_DEFAULT_ACL = "public-read"
-AWS_S3_REGION_NAME = "auto"          # Important for R2
+# AWS_S3_SIGNATURE_VERSION = "s3v4"
+# AWS_S3_ADDRESSING_STYLE = "virtual"
+# AWS_QUERYSTRING_AUTH = False
+# AWS_DEFAULT_ACL = "public-read"
+# AWS_S3_REGION_NAME = "auto"          # Important for R2
 
-# Public URL (highly recommended)
-AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.r2.cloudflarestorage.com"   # or your custom domain
+AWS_S3_REGION_NAME = ""  # Required for Cloudflare R2
+AWS_DEFAULT_ACL = "public-read"  # Adjust as needed
 
-# Folder paths inside the bucket
-AWS_LOCATION = "media"
-STATIC_LOCATION = "static"
+# # Public URL (highly recommended)
+# AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.r2.cloudflarestorage.com"   # or your custom domain
+
+# # Folder paths inside the bucket
+# AWS_LOCATION = "media"
+# STATIC_LOCATION = "static"
 
 # ====================== STORAGE BACKENDS ======================
 
-# if ENVIRONMENT == 'development':
-    # Local storage for development
-# STATIC_URL = "/static/"
-# MEDIA_URL = "/media/"
-# STATICFILES_DIRS = [BASE_DIR / "static"]
-# STATIC_ROOT = BASE_DIR / "staticfiles"
-# MEDIA_ROOT = BASE_DIR / "media"
-
 if ENVIRONMENT == 'development':
+    # Local storage for development
+    STATIC_URL = "/static/"
+    MEDIA_URL = "/media/"
+    STATICFILES_DIRS = [BASE_DIR / "static"]
+    STATIC_ROOT = BASE_DIR / "staticfiles"
+    MEDIA_ROOT = BASE_DIR / "media"
+
     STORAGES = {
         "default": {
             "BACKEND": "django.core.files.storage.FileSystemStorage",
@@ -198,21 +200,36 @@ if ENVIRONMENT == 'development':
 
 else:
     # Production: Cloudflare R2
-    STORAGES = {
-        "default": {
-            "BACKEND": "storages.backends.s3.S3Storage",   # or your custom if needed
-            "OPTIONS": {
-                "location": AWS_LOCATION,
-            },
-        },
-        "staticfiles": {
-            "BACKEND": "storages.backends.s3.S3Storage",
-            "OPTIONS": {
-                "location": STATIC_LOCATION,
-            },
-        },
-    }
+    # STORAGES = {
+    #     "default": {
+    #         "BACKEND": "storages.backends.s3.S3Storage",   # or your custom if needed
+    #         "OPTIONS": {
+    #             "location": AWS_LOCATION,
+    #         },
+    #     },
+    #     "staticfiles": {
+    #         "BACKEND": "storages.backends.s3.S3Storage",
+    #         "OPTIONS": {
+    #             "location": STATIC_LOCATION,
+    #         },
+    #     },
+    # }
+    
+    from storages.backends.s3 import S3Storage
 
+    class StaticFilesStorage(S3Storage):
+        location = 'static'
+        
+        
+    class MediaFilesStorage(S3Storage):
+        location = 'media'
+
+# URL to access static files (adjust to your Cloudflare R2 bucket)
+STATIC_URL = f"{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/static/"
+
+# URL to access media files
+
+MEDIA_URL = f"{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/media/"
 #     STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/"
 #     MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/"
 
@@ -227,12 +244,6 @@ else:
 #         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
 #     },
 # }
-# URL to access static files (adjust to your Cloudflare R2 bucket)
-STATIC_URL = f"{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/static/"
-
-# URL to access media files
-
-MEDIA_URL = f"{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/media/"
 
 
 # Email (defaults to console; configure SMTP via env vars in production)
