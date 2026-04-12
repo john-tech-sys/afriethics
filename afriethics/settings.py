@@ -180,11 +180,11 @@ STATIC_LOCATION = "static"
 
 # if ENVIRONMENT == 'development':
     # Local storage for development
-STATIC_URL = "/static/"
-MEDIA_URL = "/media/"
-STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / "staticfiles"
-MEDIA_ROOT = BASE_DIR / "media"
+# STATIC_URL = "/static/"
+# MEDIA_URL = "/media/"
+# STATICFILES_DIRS = [BASE_DIR / "static"]
+# STATIC_ROOT = BASE_DIR / "staticfiles"
+# MEDIA_ROOT = BASE_DIR / "media"
 
     # STORAGES = {
     #     "default": {
@@ -218,15 +218,28 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 
 # Storage configuration used by Django 4.2+.
+# STORAGES = {
+#     "default": {
+#         "BACKEND": "helpers.cloudflare.storages.MediaFilesStorage",  # Media files storage
+#     },
+#     "staticfiles": {
+#         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+#     },
+# }
 STORAGES = {
     "default": {
-        "BACKEND": "helpers.cloudflare.storages.MediaFilesStorage",  # Media files storage
+        "BACKEND": "storages.backends.s3.S3Storage",   # or your custom if needed
+        "OPTIONS": {
+            "location": AWS_LOCATION,
+        },
     },
     "staticfiles": {
-        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+            "location": STATIC_LOCATION,
+        },
     },
 }
-
 # URL to access static files (adjust to your Cloudflare R2 bucket)
 STATIC_URL = f"{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/static/"
 
