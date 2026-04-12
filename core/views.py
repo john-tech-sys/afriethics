@@ -6,12 +6,13 @@ from django.views.generic import DetailView, ListView, TemplateView
 
 from blog.models import Post
 from people.models import Testimonial, Founder, BoardMember
-from programs.models import Program, SuccessStory
 from engagement.models import Resource
 from home.models import HomepageHeroSlide, Page, AboutPage, AnnualReport
 from core.models import FocusArea, ImpactMetric
 from django.http import HttpResponse
 from django.contrib.sitemaps import Sitemap
+
+from programs.models import Program
 
 
 
@@ -63,19 +64,6 @@ class NewsResourcesView(TemplateView):
         return ctx
 
 
-class ProgramsImpactView(TemplateView):
-    template_name = "core/programs_impact.html"
-
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx["programs"] = Program.objects.filter(is_published=True).order_by("order", "title")
-        ctx["success_stories"] = SuccessStory.objects.filter(is_published=True).order_by("-published_at")
-        ctx["testimonials"] = Testimonial.objects.filter(is_published=True).order_by("order", "id")
-        ctx["impact_metrics"] = ImpactMetric.objects.filter(is_active=True).order_by("order", "name")
-        ctx["focus_areas"] = FocusArea.objects.filter(is_active=True).order_by("order", "name")
-        return ctx
-
-
 # Legacy views - kept for backward compatibility but could be deprecated
 class AboutMissionVisionView(TemplateView):
     template_name = "core/about_mission_vision.html"
@@ -103,16 +91,6 @@ class AboutTransparencyView(ListView):
     template_name = "core/about_transparency.html"
     context_object_name = "annual_reports"
     queryset = AnnualReport.objects.filter(is_published=True).order_by("-year")
-
-
-class ImpactView(TemplateView):
-    template_name = "core/impact.html"
-
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx["success_stories"] = SuccessStory.objects.filter(is_published=True).order_by("-published_at")[:6]
-        ctx["testimonials"] = Testimonial.objects.filter(is_published=True).order_by("order", "id")[:6]
-        return ctx
 
 
 class ResourcesView(ListView):

@@ -178,42 +178,61 @@ STATIC_LOCATION = "static"
 
 # ====================== STORAGE BACKENDS ======================
 
-if ENVIRONMENT == 'development':
+# if ENVIRONMENT == 'development':
     # Local storage for development
-    STATIC_URL = "/static/"
-    MEDIA_URL = "/media/"
-    STATICFILES_DIRS = [BASE_DIR / "static"]
-    STATIC_ROOT = BASE_DIR / "staticfiles"
-    MEDIA_ROOT = BASE_DIR / "media"
-    
-    STORAGES = {
-        "default": {
-            "BACKEND": "django.core.files.storage.FileSystemStorage",
-        },
-        "staticfiles": {
-            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
-        },
-    }
+STATIC_URL = "/static/"
+MEDIA_URL = "/media/"
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
+MEDIA_ROOT = BASE_DIR / "media"
 
-else:
-    # Production: Cloudflare R2
-    STORAGES = {
-        "default": {
-            "BACKEND": "storages.backends.s3.S3Storage",   # or your custom if needed
-            "OPTIONS": {
-                "location": AWS_LOCATION,
-            },
-        },
-        "staticfiles": {
-            "BACKEND": "storages.backends.s3.S3Storage",
-            "OPTIONS": {
-                "location": STATIC_LOCATION,
-            },
-        },
-    }
+    # STORAGES = {
+    #     "default": {
+    #         "BACKEND": "django.core.files.storage.FileSystemStorage",
+    #     },
+    #     "staticfiles": {
+    #         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    #     },
+    # }
 
-    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/"
-    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/"
+# else:
+#     # Production: Cloudflare R2
+#     STORAGES = {
+#         "default": {
+#             "BACKEND": "storages.backends.s3.S3Storage",   # or your custom if needed
+#             "OPTIONS": {
+#                 "location": AWS_LOCATION,
+#             },
+#         },
+#         "staticfiles": {
+#             "BACKEND": "storages.backends.s3.S3Storage",
+#             "OPTIONS": {
+#                 "location": STATIC_LOCATION,
+#             },
+#         },
+#     }
+
+#     STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{STATIC_LOCATION}/"
+#     MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/"
+
+
+
+# Storage configuration used by Django 4.2+.
+STORAGES = {
+    "default": {
+        "BACKEND": "helpers.cloudflare.storages.MediaFilesStorage",  # Media files storage
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
+
+# URL to access static files (adjust to your Cloudflare R2 bucket)
+STATIC_URL = f"{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/static/"
+
+# URL to access media files
+
+MEDIA_URL = f"{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/media/"
 
 
 # Email (defaults to console; configure SMTP via env vars in production)

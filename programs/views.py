@@ -1,17 +1,27 @@
 from __future__ import annotations
 
 from django.shortcuts import get_object_or_404
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, TemplateView
 
-from .models import Program, Event, SuccessStory
+from core.models import FocusArea, ImpactMetric
+from people.models import Testimonial
+
+from .models import Program, SuccessStory
 
 
-class ProgramListView(ListView):
-    template_name = "programs/program_list.html"
-    context_object_name = "programs"
 
-    def get_queryset(self):
-        return Program.objects.filter(is_published=True).order_by("order", "title")
+class ProgramsImpactView(TemplateView):
+    template_name = "core/programs_impact.html"
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["programs"] = Program.objects.filter(is_published=True).order_by("order", "title")
+        ctx["success_stories"] = SuccessStory.objects.filter(is_published=True).order_by("-published_at")
+        ctx["testimonials"] = Testimonial.objects.filter(is_published=True).order_by("order", "id")
+        ctx["impact_metrics"] = ImpactMetric.objects.filter(is_active=True).order_by("order", "name")
+        ctx["focus_areas"] = FocusArea.objects.filter(is_active=True).order_by("order", "name")
+        return ctx
+
 
 
 class ProgramDetailView(DetailView):
@@ -20,24 +30,6 @@ class ProgramDetailView(DetailView):
 
     def get_object(self, queryset=None):
         return get_object_or_404(Program, slug=self.kwargs["slug"], is_published=True)
-
-
-class EventListView(ListView):
-    template_name = "programs/event_list.html"
-    context_object_name = "events"
-    paginate_by = 12
-
-    def get_queryset(self):
-        return Event.objects.filter(is_published=True).order_by("-event_date")
-
-
-class EventDetailView(DetailView):
-    model = Event
-    template_name = "programs/event_detail.html"
-    context_object_name = "event"
-
-    def get_object(self, queryset=None):
-        return get_object_or_404(Event, slug=self.kwargs["slug"], is_published=True)
 
 
 class SuccessStoryListView(ListView):

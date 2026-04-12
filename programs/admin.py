@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Program, Event, SuccessStory
+from .models import Program, SuccessStory
 
 
 @admin.register(Program)
@@ -10,24 +10,6 @@ class ProgramAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
     search_fields = ("title", "summary", "description")
 
-
-@admin.register(Event)
-class EventAdmin(admin.ModelAdmin):
-    list_display = ("title", "event_date", "location", "related_program")
-    search_fields = ("title", "location", "description")
-    date_hierarchy = "event_date"
-    readonly_fields = ("updated_at",)
-    fieldsets = (
-        ("Event Information", {
-            "fields": ("title", "slug", "event_date", "location")
-        }),
-        ("Details", {
-            "fields": ("description", "related_program", "image")
-        }),
-        ("Publishing", {
-            "fields": ("is_published", "updated_at")
-        }),
-    )
 
 
 @admin.register(SuccessStory)
