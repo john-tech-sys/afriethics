@@ -16,6 +16,7 @@ from pathlib import Path
 from decouple import config, Csv
 import dj_database_url
 import environ
+from django.core.exceptions import ImproperlyConfigured
 
 mimetypes.add_type("text/css", ".css", True)
 
@@ -162,15 +163,24 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
 AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
-AWS_S3_ENDPOINT_URL = config("AWS_S3_ENDPOINT_URL")          # e.g. https://xxx.r2.cloudflarestorage.com
+AWS_S3_ENDPOINT_URL = config("AWS_S3_ENDPOINT_URL").rstrip("/")
 AWS_S3_SIGNATURE_VERSION = "s3v4"
 AWS_S3_ADDRESSING_STYLE = "virtual"
 AWS_QUERYSTRING_AUTH = False
 AWS_DEFAULT_ACL = "public-read"
 AWS_S3_REGION_NAME = "auto"          # Important for R2
 
-# Public URL (highly recommended)
-AWS_S3_CUSTOM_DOMAIN = f"{AWS_S3_ENDPOINT_URL}.r2.cloudflarestorage.com"   # or your custom domain
+# Public object domain (recommended: your R2 public/custom domain, without trailing slash).
+# Example: pub-xxxx.r2.dev OR media.afriethics.org
+AWS_S3_CUSTOM_DOMAIN = config("AWS_S3_CUSTOM_DOMAIN", default="").strip().rstrip("/")
+
+
+def _normalize_public_base_url(value: str) -> str:
+    if not value:
+        return ""
+    if value.startswith("http://") or value.startswith("https://"):
+        return value.rstrip("/")
+    return f"https://{value.rstrip('/')}"
 
 # Folder paths inside the bucket
 AWS_LOCATION = "media"
@@ -197,23 +207,21 @@ if ENVIRONMENT == 'development':
 
 else:
     # Production: Cloudflare R2
+    if not AWS_S3_CUSTOM_DOMAIN:
+        raise ImproperlyConfigured("AWS_S3_CUSTOM_DOMAIN must be set in production.")
+
     STORAGES = {
         "default": {
-            "BACKEND": "storages.backends.s3.S3Storage",   # or your custom if needed
-            "OPTIONS": {
-                "location": AWS_LOCATION,
-            },
+            "BACKEND": "helpers.cloudflare.storages.MediaFilesStorage",
         },
         "staticfiles": {
-            "BACKEND": "storages.backends.s3.S3Storage",
-            "OPTIONS": {
-                "location": STATIC_LOCATION,
-            },
+            "BACKEND": "helpers.cloudflare.storages.StaticFilesStorage",
         },
     }
 
-    STATIC_URL = f"{AWS_S3_CUSTOM_DOMAIN}/{AWS_STORAGE_BUCKET_NAME}/{STATIC_LOCATION}/"
-    MEDIA_URL = f"{AWS_S3_CUSTOM_DOMAIN}/{AWS_STORAGE_BUCKET_NAME}/{AWS_LOCATION}/"
+    _public_base = _normalize_public_base_url(AWS_S3_CUSTOM_DOMAIN)
+    STATIC_URL = f"{_public_base}/{STATIC_LOCATION}/"
+    MEDIA_URL = f"{_public_base}/{AWS_LOCATION}/"
 
 
 # Email (defaults to console; configure SMTP via env vars in production)
