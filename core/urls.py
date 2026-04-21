@@ -5,6 +5,7 @@ from .views import (
     HomeView, 
     PageDetailView,
     AboutView,
+    WhyWeExistView,
     NewsResourcesView,
     AboutMissionVisionView,
     AboutFoundersView,
@@ -26,6 +27,7 @@ urlpatterns = [
     path('health', health, name='health'),
     # Consolidated pages
     path("about/", AboutView.as_view(), name="about"),
+    path("why_we_exist/", WhyWeExistView.as_view(), name="why_we_exist"),
     path("news-resources/", NewsResourcesView.as_view(), name="news-resources"),
     
     # Legacy About Pages (redirect or deprecated)

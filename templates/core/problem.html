@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Why We Exist · {{ site_settings.name|default:"AfriEthics Initiative" }}{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<div class="page-header">
+  <div class="container">
+    <h1>Why We Exist</h1>
+    <nav aria-label="breadcrumb" class="mt-3">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Why We Exist</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="container py-5">
+  <div class="text-center mx-auto mb-5" style="max-width: 800px;">
+    <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">Why We Exist</div>
+    <h2 class="section-title">Ethical Leadership is the Foundation for Africa's Transformation</h2>
+    <p>
+      At AfriEthics Initiative, we believe that ethical leadership is not optional - it is the foundation for sustainable development,
+      justice, and trust in both public and private institutions. Our work is rooted in values that challenge corruption, inspire
+      integrity, and empower young people to rise with purpose.
+    </p>
+  </div>
+
+  <div class="row g-4 text-center mb-5">
+    <div class="col-12">
+      <div class="p-4 border rounded bg-white h-100 shadow-sm">
+        <div class="d-inline-block rounded-pill bg-primary text-white py-1 px-3 mb-3">Why We Exist</div>
+        <h3 class="mb-3">The Challenge of Corruption in Uganda</h3>
+
+        <p class="fs-5 text-start">
+          Corruption remains one of the most pressing governance challenges in Uganda, eroding public trust, distorting development
+          priorities, and undermining service delivery. According to the Inspectorate of Government (IGG), Uganda loses an estimated
+          <strong>UGX 10 trillion</strong> to corruption every year, equivalent to over <strong>44%</strong> of annual revenue.
+          Between January 2022 and June 2023, only <strong>UGX 7.99 billion</strong> was recovered, representing less than
+          <strong>0.1%</strong> of the total loss.
+        </p>
+
+        <p class="fs-5 text-start">
+          These figures highlight the magnitude of the problem and the urgent need for preventive and community-driven approaches.
+          While government agencies and civil society actors continue to combat corruption, persistent gaps remain.
+          Young people, who represent about <strong>72%</strong> of the population and are aged 30 and below in Uganda,
+          are not adequately engaged or empowered to take part in anti-corruption efforts.
+        </p>
+
+        <p class="fs-5 text-start">
+          Many lack opportunities for values-based ethical leadership training, civic education, and practical platforms for
+          participation in governance. At the same time, low community awareness of anti-corruption measures and weak grassroots
+          mobilization perpetuate a culture of impunity. Without ethical grounding and informed civic participation, youth risk
+          becoming bystanders or even participants in the cycle of corruption.
+        </p>
+
+        <p class="small text-secondary text-start">
+          Source:
+          <a href="https://parliamentwatch.ug/news-amp-updates/igg-recovers-ugx7-9bn-out-of-the-ugx10trn-annual-loss-to-corruption/" target="_blank" rel="noopener">
+            Uganda Inspectorate of Government (IGG)
+          </a>
+        </p>
+
+        <hr>
+
+        <p class="fs-5 mt-3 text-center">
+          This is why <strong>AfriEthics Initiative exists</strong>.<br>
+          To raise a generation of ethical leaders, strengthen integrity, and protect public resources through values-based leadership.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center">
+    <h4 class="mb-4">This is what we believe.<br>If you believe it too, join us.</h4>
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+      <a href="/volunteer/" class="btn btn-primary">Volunteer</a>
+      <a href="/partner/" class="btn btn-outline-primary">Partner With Us</a>
+      <a href="/programs/" class="btn btn-secondary">Read Our Work</a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

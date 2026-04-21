@@ -64,6 +64,10 @@ class NewsResourcesView(TemplateView):
         return ctx
 
 
+class WhyWeExistView(TemplateView):
+    template_name = "core/problem.html"
+
+
 # Legacy views - kept for backward compatibility but could be deprecated
 class AboutMissionVisionView(TemplateView):
     template_name = "core/about_mission_vision.html"
