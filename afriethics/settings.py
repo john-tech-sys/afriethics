@@ -171,8 +171,9 @@ AWS_DEFAULT_ACL = "public-read"
 AWS_S3_REGION_NAME = "auto"          # Important for R2
 
 # Public object domain (recommended: your R2 public/custom domain, without trailing slash).
-# Example: pub-xxxx.r2.dev OR media.afriethics.org
-AWS_S3_CUSTOM_DOMAIN = config("AWS_S3_CUSTOM_DOMAIN", default="").strip().rstrip("/")
+# IMPORTANT: django-storages expects host only (no scheme), e.g. pub-xxxx.r2.dev
+_AWS_S3_CUSTOM_DOMAIN_RAW = config("AWS_S3_CUSTOM_DOMAIN", default="").strip().rstrip("/")
+AWS_S3_CUSTOM_DOMAIN = _AWS_S3_CUSTOM_DOMAIN_RAW.replace("https://", "").replace("http://", "").rstrip("/")
 
 
 def _normalize_public_base_url(value: str) -> str:
