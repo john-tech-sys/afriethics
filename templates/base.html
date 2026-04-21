@@ -33,8 +33,6 @@
     
     <!-- Bootstrap 5 CSS -->
     <link href="{% static 'bootstrap-5.3.8-dist/css/bootstrap.min.css' %}" rel="stylesheet">
-    <script src="{% static 'jquery.min.js' %}" id="jquery-core-js"></script>
-    <script src="{% static 'bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js' %}"></script>
     <!-- Custom CSS -->
     <style>
       :root {
@@ -178,6 +176,10 @@
         color: #666;
         margin-bottom: 3rem;
       }
+
+      .navbar .dropdown-menu {
+        z-index: 2000;
+      }
     </style>
     
     {% block extra_css %}{% endblock %}
@@ -221,7 +223,7 @@
             
             <!-- Get Involved Dropdown -->
             <li class="nav-item dropdown px-2">
-              <a class="nav-link dropdown-toggle fw-500" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link dropdown-toggle fw-500" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
                 Get Involved
               </a>
               <ul class="dropdown-menu">
@@ -338,6 +340,18 @@
     <script>
       // Initialize WOW.js for scroll animations
       new WOW().init();
+
+      // Ensure nav dropdown works consistently on touch/tablet devices.
+      document.querySelectorAll('.navbar .dropdown-toggle').forEach(function (toggleEl) {
+        if (window.bootstrap && window.bootstrap.Dropdown) {
+          new window.bootstrap.Dropdown(toggleEl);
+        }
+        toggleEl.addEventListener('click', function (event) {
+          if (toggleEl.getAttribute('href') === '#') {
+            event.preventDefault();
+          }
+        });
+      });
       
       // Initialize Owl Carousel
       $('.owl-carousel').owlCarousel({
