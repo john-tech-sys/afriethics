@@ -10,6 +10,8 @@ class BaseR2Storage(S3Boto3Storage):
     endpoint_url = config("AWS_S3_ENDPOINT_URL")
     region_name = config("AWS_S3_REGION_NAME", default="auto")
     addressing_style = config("AWS_S3_ADDRESSING_STYLE", default="virtual")
+    custom_domain = config("AWS_S3_CUSTOM_DOMAIN", default="").replace("https://", "").replace("http://", "").rstrip("/")
+    url_protocol = "https:"
 
 
 class StaticFilesStorage(BaseR2Storage):
