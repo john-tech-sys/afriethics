@@ -1,5 +1,4 @@
 
 release: python manage.py migrate && python manage.py collectstatic --noinput
 
-web: gunicorn afriethics.wsgi:application --log-file -
-web: gunicorn afriethics.wsgi
+web: gunicorn afriethics.wsgi:application
