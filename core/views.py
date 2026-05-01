@@ -15,6 +15,9 @@ from django.contrib.sitemaps import Sitemap
 from programs.models import Program
 
 
+def ping(request):
+    return HttpResponse("OK")
+
 
 class StaticViewSitemap(Sitemap):
     def items(self):

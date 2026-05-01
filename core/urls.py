@@ -13,6 +13,7 @@ from .views import (
     AboutTransparencyView,
     ResourcesView,
     health,
+    ping,
 )
 from core import views
 
@@ -24,7 +25,8 @@ app_name = "core"
 urlpatterns = [
     path("", HomeView.as_view(), name="home"),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}),    
-    path('health', health, name='health'),
+    path('health', health, name='health'),  
+    path('ping', ping, name='ping'),
     # Consolidated pages
     path("about/", AboutView.as_view(), name="about"),
     path("why_we_exist/", WhyWeExistView.as_view(), name="why_we_exist"),
