@@ -54,7 +54,7 @@ class SiteConfiguration(models.Model):
 	twitter = models.URLField(default = 'twitter.com')
 	facebook = models.URLField(default = 'facebook.com')
 	youtube = models.URLField(default = 'youtube.com')
-	instagram = models.URLField(default = 'instagram.com')
+	linkedin = models.URLField(default = 'linkedin.com')
 	favicon = models.ImageField(upload_to='config/',  default = 'default/Ajoreb.png')
 	banner1 = models.ForeignKey(Banner, on_delete = models.DO_NOTHING, blank=True, null=True, related_name='banner1')
 	banner2 = models.ForeignKey(Banner, on_delete = models.DO_NOTHING, blank=True, null=True, related_name='banner2')

@@ -11,7 +11,8 @@ django-storages==1.14.6
 gunicorn==22.0.0
 jmespath==1.1.0
 packaging==26.0
-pillow==10.4.0
+pillow==10.4.0; python_version < "3.14"
+pillow>=11.0.0; python_version >= "3.14"
 psycopg2-binary==2.9.11
 python-dateutil==2.9.0.post0
 python-decouple==3.8

@@ -7,7 +7,7 @@ from django.views.generic import DetailView, ListView, TemplateView
 from blog.models import Post
 from people.models import Testimonial, Founder, BoardMember
 from engagement.models import Resource
-from home.models import HomepageHeroSlide, Page, AboutPage, AnnualReport
+from home.models import Ethos, HomepageHeroSlide, Page, AboutPage, AnnualReport
 from core.models import FocusArea, ImpactMetric
 from django.http import HttpResponse
 from django.contrib.sitemaps import Sitemap
@@ -36,6 +36,7 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
+        ctx["ethos"] = Ethos.objects.filter(is_active=True).first()
         ctx["hero_slides"] = HomepageHeroSlide.objects.filter(is_active=True).order_by("order", "id")
         ctx["programs"] = Program.objects.filter(is_published=True).order_by("order", "title")[:6]
         ctx["latest_posts"] = Post.objects.published().order_by("-published_at")[:3]
@@ -50,6 +51,7 @@ class AboutView(TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
+        ctx["about_page"] = AboutPage.objects.filter(is_active=True).first()
         ctx["founders"] = Founder.objects.filter(is_active=True).order_by("order", "name")
         ctx["directors"] = BoardMember.objects.filter(member_type='director', is_active=True).order_by("order", "name")
         ctx["advisors"] = BoardMember.objects.filter(member_type='advisor', is_active=True).order_by("order", "name")

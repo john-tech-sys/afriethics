@@ -43,7 +43,7 @@ if env.bool("DJANGO_READ_DOT_ENV", default=False):
 # Prefer setting DJANGO_SECRET_KEY in your environment (or a .env you load externally).
 SECRET_KEY = env("DJANGO_SECRET_KEY", default="change-me")
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'afriethics.onrender.com', 'afriethics.org', 'www.afriethics.org']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.1.229', 'afriethics.onrender.com', 'afriethics.org', 'www.afriethics.org']
 
 CSRF_TRUSTED_ORIGINS = ['https://afriethics.onrender.com', 'https://afriethics.org', 'https://www.afriethics.org']
 
@@ -113,17 +113,18 @@ ASGI_APPLICATION = "afriethics.asgi.application"
 #     )
 # }
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+DATABASE_URL = config("DATABASE_URL", default="").strip()
+
+if DATABASE_URL:
+    DATABASES = {
+        "default": dj_database_url.parse(
+            DATABASE_URL,
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
     }
-}
-
-POSTGRES_LOCALLY = True
-
-if ENVIRONMENT == 'production' or POSTGRES_LOCALLY == True:
-    DATABASES['default'] = dj_database_url.parse(config('DATABASE_URL'))
+else:
+    raise ImproperlyConfigured("DATABASE_URL must be set. Local SQLite is disabled for this project.")
     
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -189,7 +190,9 @@ STATIC_LOCATION = "static"
 
 # ====================== STORAGE BACKENDS ======================
 
-if ENVIRONMENT == 'development':
+USE_S3_STORAGE = config("USE_S3_STORAGE", cast=bool, default=(ENVIRONMENT == "production"))
+
+if not USE_S3_STORAGE:
     # Local storage for development
     STATIC_URL = "/static/"
     MEDIA_URL = "/media/"
@@ -209,7 +212,7 @@ if ENVIRONMENT == 'development':
 else:
     # Production: Cloudflare R2
     if not AWS_S3_CUSTOM_DOMAIN:
-        raise ImproperlyConfigured("AWS_S3_CUSTOM_DOMAIN must be set in production.")
+        raise ImproperlyConfigured("AWS_S3_CUSTOM_DOMAIN must be set when USE_S3_STORAGE=true.")
 
     STORAGES = {
         "default": {
