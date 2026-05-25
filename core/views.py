@@ -7,7 +7,7 @@ from django.views.generic import DetailView, ListView, TemplateView
 from blog.models import Post
 from people.models import Testimonial, Founder, BoardMember
 from engagement.models import Resource
-from home.models import Ethos, HomepageHeroSlide, Page, AboutPage, AnnualReport, IntroVideo
+from home.models import Ethos, HomepageHeroSlide, Page, AboutPage, AnnualReport, IntroVideo, Values
 from core.models import FocusArea, ImpactMetric
 from django.http import HttpResponse
 from django.contrib.sitemaps import Sitemap
@@ -53,6 +53,7 @@ class AboutView(TemplateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx["about_page"] = AboutPage.objects.all().first()
+        ctx["values"] = Values.objects.filter(active=True)
         ctx["founders"] = Founder.objects.filter(is_active=True).order_by("order", "name")
         ctx["directors"] = BoardMember.objects.filter(member_type='director', is_active=True).order_by("order", "name")
         ctx["advisors"] = BoardMember.objects.filter(member_type='advisor', is_active=True).order_by("order", "name")

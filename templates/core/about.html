@@ -20,30 +20,52 @@
       <p class="section-subtitle">The principles that guide everything we do</p>
     </div>
     <div class="row g-4">
-      <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
-        <div class="card h-100 border-0 shadow-sm">
-          <div class="card-body">
-            <h5 class="card-title text-primary"><i class="fas fa-shield-alt me-2"></i>Integrity</h5>
-            <p class="card-text">We uphold the highest standards of honesty and moral principles in all our actions and decisions.</p>
+      {% if values %}
+        {% for value in values %}
+          <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.{{ forloop.counter }}s">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title text-primary">
+                  {% if value.label %}
+                    <i class="{{ value.label }} me-2"></i>
+                  {% else %}
+                    <i class="fas fa-check-circle me-2"></i>
+                  {% endif %}
+                  {{ value.title }}
+                </h5>
+                {% if value.description %}
+                  <p class="card-text">{{ value.description }}</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title text-primary"><i class="fas fa-shield-alt me-2"></i>Integrity</h5>
+              <p class="card-text">We uphold the highest standards of honesty and moral principles in all our actions and decisions.</p>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.2s">
-        <div class="card h-100 border-0 shadow-sm">
-          <div class="card-body">
-            <h5 class="card-title text-primary"><i class="fas fa-eye me-2"></i>Transparency</h5>
-            <p class="card-text">We believe in open communication and accountability, ensuring all stakeholders have access to information.</p>
+        <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.2s">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title text-primary"><i class="fas fa-eye me-2"></i>Transparency</h5>
+              <p class="card-text">We believe in open communication and accountability, ensuring all stakeholders have access to information.</p>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.3s">
-        <div class="card h-100 border-0 shadow-sm">
-          <div class="card-body">
-            <h5 class="card-title text-primary"><i class="fas fa-balance-scale me-2"></i>Fairness</h5>
-            <p class="card-text">We advocate for equitable treatment and justice for all, promoting inclusive governance and participation.</p>
+        <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.3s">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title text-primary"><i class="fas fa-balance-scale me-2"></i>Fairness</h5>
+              <p class="card-text">We advocate for equitable treatment and justice for all, promoting inclusive governance and participation.</p>
+            </div>
           </div>
         </div>
-      </div>
+      {% endif %}
     </div>
   </div>
 </div>
