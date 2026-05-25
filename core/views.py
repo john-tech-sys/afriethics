@@ -53,7 +53,7 @@ class AboutView(TemplateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx["about_page"] = AboutPage.objects.all().first()
-        ctx["values"] = Values.objects.filter(active=True)
+        ctx["values"] = Values.objects.filter(active=True).order_by("order", "title")
         ctx["founders"] = Founder.objects.filter(is_active=True).order_by("order", "name")
         ctx["directors"] = BoardMember.objects.filter(member_type='director', is_active=True).order_by("order", "name")
         ctx["advisors"] = BoardMember.objects.filter(member_type='advisor', is_active=True).order_by("order", "name")

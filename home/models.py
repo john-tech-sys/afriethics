@@ -131,12 +131,14 @@ class Values(models.Model):
     label = models.CharField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     call_to_url = models.CharField(max_length=500, default="/")
+    order = models.PositiveIntegerField(default=0)
     active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title
 
     class Meta:
+        ordering = ["order", "title"]
         verbose_name_plural = "Values"
 
 

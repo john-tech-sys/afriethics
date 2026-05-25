@@ -66,7 +66,8 @@ class EthosAdmin(admin.ModelAdmin):
 
 @admin.register(Values)
 class ValuesAdmin(admin.ModelAdmin):
-    list_display = ('title', 'label', 'active')
+    list_display = ('title', 'label', 'order', 'active')
+    list_editable = ('order', 'active')
     search_fields = ('title', 'label', 'description')
 
 
