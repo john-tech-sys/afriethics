@@ -247,3 +247,34 @@ class HomeTestimonial(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class IntroVideo(models.Model):
+    """Pitch / introductory video shown on the homepage."""
+
+    title = models.CharField(max_length=160, default="Watch Our Story")
+    subtitle = models.CharField(max_length=255, blank=True, help_text="Short line shown below the title")
+    # Admins paste an embed URL (YouTube: https://www.youtube.com/embed/ID, Vimeo: https://player.vimeo.com/video/ID)
+    embed_url = models.URLField(
+        blank=True,
+        help_text="YouTube or Vimeo embed URL (e.g. https://www.youtube.com/embed/xxxxx)",
+    )
+    # Alternative: an uploaded video file
+    video_file = models.FileField(
+        upload_to="intro_videos/",
+        blank=True,
+        help_text="Upload an MP4 file (used when no embed URL is provided)",
+    )
+    thumbnail = models.ImageField(
+        upload_to="intro_videos/thumbs/",
+        blank=True,
+        help_text="Poster image shown before the video plays",
+    )
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = "Intro / Pitch Video"
+        verbose_name_plural = "Intro / Pitch Videos"
+
+    def __str__(self) -> str:
+        return self.title

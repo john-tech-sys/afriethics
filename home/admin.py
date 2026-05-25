@@ -3,6 +3,7 @@ from django.contrib import admin
 from .models import (
     Section, Pages, Country, Home, HomepageHeroSlide, Page, Ethos, Values,
     AboutPage, AnnualReport, HappyCustomers, Feedback, HomeTestimonial,
+    IntroVideo,
     Partnership, WhyPartnerWithUs, AreasOfPartnership
 )
 
@@ -117,6 +118,24 @@ class HappyCustomersAdmin(admin.ModelAdmin):
 @admin.register(Feedback)
 class FeedbackAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(IntroVideo)
+class IntroVideoAdmin(admin.ModelAdmin):
+    list_display = ('title', 'is_active')
+    list_editable = ('is_active',)
+    fieldsets = (
+        ('Content', {
+            'fields': ('title', 'subtitle', 'thumbnail')
+        }),
+        ('Video Source', {
+            'description': 'Provide either an embed URL (YouTube/Vimeo) or upload an MP4 file.',
+            'fields': ('embed_url', 'video_file')
+        }),
+        ('Publishing', {
+            'fields': ('is_active',)
+        }),
+    )
 
 
 @admin.register(HomeTestimonial)

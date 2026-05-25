@@ -7,7 +7,7 @@ from django.views.generic import DetailView, ListView, TemplateView
 from blog.models import Post
 from people.models import Testimonial, Founder, BoardMember
 from engagement.models import Resource
-from home.models import Ethos, HomepageHeroSlide, Page, AboutPage, AnnualReport
+from home.models import Ethos, HomepageHeroSlide, Page, AboutPage, AnnualReport, IntroVideo
 from core.models import FocusArea, ImpactMetric
 from django.http import HttpResponse
 from django.contrib.sitemaps import Sitemap
@@ -38,6 +38,7 @@ class HomeView(TemplateView):
         ctx = super().get_context_data(**kwargs)
         ctx["ethos"] = Ethos.objects.all().first()
         ctx["hero_slides"] = HomepageHeroSlide.objects.filter(is_active=True).order_by("order", "id")
+        ctx["intro_video"] = IntroVideo.objects.filter(is_active=True).first()
         ctx["programs"] = Program.objects.filter(is_published=True).order_by("order", "title")[:6]
         ctx["latest_posts"] = Post.objects.published().order_by("-published_at")[:3]
         ctx["testimonials"] = Testimonial.objects.filter(is_published=True).order_by("order", "id")[:6]

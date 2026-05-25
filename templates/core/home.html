@@ -46,6 +46,102 @@
 </div>
 <!-- Hero Carousel End -->
 
+<!-- Intro / Pitch Video Start -->
+{% if intro_video %}
+<div class="container-fluid py-5" style="background: linear-gradient(135deg, #012164 0%, #0B3A75 60%, #1F5FBF 100%);">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <!-- Text side -->
+      <div class="col-lg-5 wow fadeInLeft" data-wow-delay="0.1s">
+        <p class="text-uppercase fw-semibold mb-2" style="color: #FFD200; letter-spacing: .1em;">
+          <i class="bi bi-play-circle me-1"></i> Watch Our Story
+        </p>
+        <h2 class="display-6 fw-bold text-white mb-3">{{ intro_video.title }}</h2>
+        {% if intro_video.subtitle %}
+          <p class="fs-5 text-white-50 mb-4">{{ intro_video.subtitle }}</p>
+        {% endif %}
+        <button class="btn btn-lg px-4 py-2 fw-semibold"
+                style="background:#FFD200;color:#012164;border:none;"
+                data-bs-toggle="modal" data-bs-target="#introVideoModal">
+          <i class="bi bi-play-fill me-2"></i>Play Video
+        </button>
+      </div>
+
+      <!-- Thumbnail / play overlay side -->
+      <div class="col-lg-7 wow fadeInRight" data-wow-delay="0.2s">
+        <div class="position-relative rounded-4 overflow-hidden shadow-lg"
+             style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#introVideoModal">
+          {% if intro_video.thumbnail %}
+            <img src="{{ intro_video.thumbnail.url }}" alt="{{ intro_video.title }}"
+                 class="img-fluid w-100" style="max-height:380px;object-fit:cover;">
+          {% else %}
+            <div class="d-flex align-items-center justify-content-center"
+                 style="height:340px;background:rgba(255,255,255,.08);">
+              <i class="bi bi-film text-white-50" style="font-size:6rem;"></i>
+            </div>
+          {% endif %}
+          <!-- Play button overlay -->
+          <div class="position-absolute top-50 start-50 translate-middle">
+            <div class="rounded-circle d-flex align-items-center justify-content-center"
+                 style="width:80px;height:80px;background:#FFD200;box-shadow:0 0 0 12px rgba(255,210,0,.25);">
+              <i class="bi bi-play-fill fs-2" style="color:#012164;margin-left:4px;"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Video Modal -->
+<div class="modal fade" id="introVideoModal" tabindex="-1" aria-label="{{ intro_video.title }}" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content bg-black border-0">
+      <div class="modal-header border-0 pb-0">
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-0">
+        <div class="ratio ratio-16x9">
+          {% if intro_video.embed_url %}
+            <iframe id="introIframe"
+                    src=""
+                    data-src="{{ intro_video.embed_url }}?autoplay=1&rel=0"
+                    title="{{ intro_video.title }}"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+          {% elif intro_video.video_file %}
+            <video id="introVideoEl" controls
+                   {% if intro_video.thumbnail %}poster="{{ intro_video.thumbnail.url }}"{% endif %}>
+              <source src="{{ intro_video.video_file.url }}" type="video/mp4">
+            </video>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var modal = document.getElementById('introVideoModal');
+  if (!modal) return;
+  modal.addEventListener('show.bs.modal', function () {
+    var iframe = document.getElementById('introIframe');
+    var video  = document.getElementById('introVideoEl');
+    if (iframe) iframe.src = iframe.dataset.src;
+    if (video)  video.play();
+  });
+  modal.addEventListener('hide.bs.modal', function () {
+    var iframe = document.getElementById('introIframe');
+    var video  = document.getElementById('introVideoEl');
+    if (iframe) { iframe.src = ''; }
+    if (video)  { video.pause(); video.currentTime = 0; }
+  });
+})();
+</script>
+{% endif %}
+<!-- Intro / Pitch Video End -->
+
 <!-- About Section Start -->
 <div class="container py-5">
   <div class="row g-4 align-items-center">
