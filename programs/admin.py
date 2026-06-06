@@ -41,6 +41,7 @@ class ProfessionalServiceCategoryAdmin(admin.ModelAdmin):
     list_editable = ("order", "is_published")
     prepopulated_fields = {"slug": ("title",)}
     search_fields = ("title", "summary", "description")
+    readonly_fields = ("updated_at", "created_at")
     fieldsets = (
         ("Category Information", {
             "fields": ("title", "slug", "icon", "image")
@@ -49,7 +50,7 @@ class ProfessionalServiceCategoryAdmin(admin.ModelAdmin):
             "fields": ("summary", "description")
         }),
         ("Publishing", {
-            "fields": ("order", "is_published", "updated_at")
+            "fields": ("order", "is_published", "created_at", "updated_at")
         }),
     )
 

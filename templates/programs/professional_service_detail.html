@@ -11,8 +11,8 @@
     <nav aria-label="breadcrumb" class="mt-3">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item"><a href="/programs/">Our Work</a></li>
-        <li class="breadcrumb-item"><a href="/professional-services/">Professional Services</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'programs:list' %}">Our Work</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'programs:professional-services-list' %}">Professional Services</a></li>
         <li class="breadcrumb-item"><a href="{{ service.category.get_absolute_url }}">{{ service.category.title }}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{ service.title }}</li>
       </ol>
@@ -100,7 +100,7 @@
           <a href="{{ service.category.get_absolute_url }}" class="btn btn-outline-primary w-100 mb-2">
             <i class="fas fa-arrow-left me-2"></i>Back to {{ service.category.title }}
           </a>
-          <a href="/professional-services/" class="btn btn-outline-secondary w-100">
+          <a href="{% url 'programs:professional-services-list' %}" class="btn btn-outline-secondary w-100">
             <i class="fas fa-th me-2"></i>All Services
           </a>
         </div>
