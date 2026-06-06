@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models import (
     Section, Pages, Country, Home, HomepageHeroSlide, Page, Ethos, Values,
     AboutPage, AnnualReport, HappyCustomers, Feedback, HomeTestimonial,
-    IntroVideo,
+    IntroVideo, ProblemPage,
     Partnership, WhyPartnerWithUs, AreasOfPartnership
 )
 
@@ -157,3 +157,35 @@ class WhyPartnerWithUsAdmin(admin.ModelAdmin):
 @admin.register(AreasOfPartnership)
 class AreasOfPartnershipAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(ProblemPage)
+class ProblemPageAdmin(admin.ModelAdmin):
+    list_display = ('id', 'badge_text', 'is_published', 'updated_at')
+    list_editable = ('is_published',)
+    readonly_fields = ('updated_at',)
+    fieldsets = (
+        ('Hero Section', {
+            'fields': ('badge_text', 'section_title', 'intro_description')
+        }),
+        ('Challenge Block', {
+            'fields': ('challenge_title', 'challenge_body')
+        }),
+        ('Source Attribution', {
+            'fields': ('source_label', 'source_url')
+        }),
+        ('Closing Statement', {
+            'fields': ('closing_statement',)
+        }),
+        ('Call to Action', {
+            'fields': (
+                'cta_header',
+                ('cta_volunteer_text', 'cta_volunteer_url'),
+                ('cta_partner_text', 'cta_partner_url'),
+                ('cta_programs_text', 'cta_programs_url'),
+            )
+        }),
+        ('Publishing', {
+            'fields': ('is_published', 'updated_at')
+        }),
+    )

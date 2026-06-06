@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}Professional Services · {{ site_settings.name|default:"AfriEthics Initiative" }}{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<div class="page-header">
+  <div class="container">
+    <h1>Professional Services</h1>
+    <nav aria-label="breadcrumb" class="mt-3">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/programs/">Our Work</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Professional Services</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="container py-5">
+  <!-- Introduction Section -->
+  <div class="row mb-5">
+    <div class="col-lg-8 mx-auto text-center">
+      <h2 class="section-title">Expert Solutions for Integrity & Governance</h2>
+      <p class="section-subtitle">Comprehensive professional services to strengthen organizational integrity, mitigate fraud risks, and build ethical capacity across Africa.</p>
+    </div>
+  </div>
+
+  <!-- Categories Grid -->
+  {% if categories %}
+  <div class="row g-4">
+    {% for category in categories %}
+    <div class="col-lg-4 col-md-6">
+      <div class="card h-100 border-0 shadow-sm wow fadeInUp" data-wow-delay="{{ forloop.counter|floatformat:1 }}s">
+        {% if category.image %}
+        <div class="card-header p-0">
+          <img src="{{ category.image.url }}" alt="{{ category.title }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+        </div>
+        {% elif category.icon %}
+        <div class="card-header bg-primary text-white text-center py-4">
+          <i class="{{ category.icon }} fa-3x mb-2"></i>
+        </div>
+        {% endif %}
+        <div class="card-body">
+          <h4 class="card-title">{{ category.title }}</h4>
+          {% if category.summary %}
+          <p class="card-text text-muted">{{ category.summary }}</p>
+          {% endif %}
+          <div class="mt-3">
+            <span class="badge bg-light text-dark">{{ category.services.count }} Services</span>
+          </div>
+        </div>
+        <div class="card-footer bg-white border-0">
+          <a href="{{ category.get_absolute_url }}" class="btn btn-primary w-100">
+            Explore Services <i class="fas fa-arrow-right ms-2"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="alert alert-info text-center">
+    <i class="fas fa-info-circle me-2"></i>
+    No professional service categories available at this time.
+  </div>
+  {% endif %}
+
+  <!-- Call to Action -->
+  <div class="row mt-5">
+    <div class="col-12">
+      <div class="card border-0 bg-primary text-white text-center py-5">
+        <div class="card-body">
+          <h3 class="card-title mb-3">Ready to Strengthen Your Organization's Integrity?</h3>
+          <p class="card-text mb-4">Contact us to discuss how our professional services can help your organization build capacity, mitigate risks, and promote ethical governance.</p>
+          <a href="/contact/" class="btn btn-warning btn-lg">Get in Touch</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .page-header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    padding: 4rem 0;
+    margin-bottom: 3rem;
+  }
+
+  .page-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+
+  .breadcrumb {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+  }
+
+  .breadcrumb-item a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+  }
+
+  .breadcrumb-item a:hover {
+    color: white;
+  }
+
+  .breadcrumb-item.active {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--primary);
+  }
+
+  .section-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 3rem;
+  }
+
+  .card {
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  }
+
+  .card-img-top {
+    border-top-left-radius: calc(0.375rem - 1px);
+    border-top-right-radius: calc(0.375rem - 1px);
+  }
+</style>
+
+{% endblock %}

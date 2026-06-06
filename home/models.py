@@ -280,3 +280,112 @@ class IntroVideo(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+
+class ProblemPage(models.Model):
+    """Database-driven content for the Why We Exist / Problem page.
+
+    All of the text, statistics, links and call-to-action elements on the
+    problem page are editable through this singleton model.
+    """
+
+    # ── Hero / intro section ──────────────────────────────────────────
+    badge_text = models.CharField(
+        max_length=150,
+        default="Why We Exist",
+        help_text="Small pill / badge shown above the heading",
+    )
+    section_title = models.CharField(
+        max_length=300,
+        default="Ethical Leadership is the Foundation for Africa's Transformation",
+        help_text="Main heading of the page",
+    )
+    intro_description = models.TextField(
+        blank=True,
+        help_text="Introductory paragraph below the main heading.",
+    )
+
+    # ── Challenge block ───────────────────────────────────────────────
+    challenge_title = models.CharField(
+        max_length=300,
+        default="The Challenge of Corruption in Uganda",
+        help_text="Title of the challenge / statistics section",
+    )
+    challenge_body = RichTextField(
+        blank=True,
+        help_text=(
+            "Main body text with corruption statistics. "
+            "Use the rich-text editor to format paragraphs, bold numbers, etc."
+        ),
+    )
+
+    # ── Source attribution ────────────────────────────────────────────
+    source_label = models.CharField(
+        max_length=500,
+        blank=True,
+        help_text="Visible text of the source link (e.g. 'Uganda Inspectorate of Government (IGG)')",
+    )
+    source_url = models.URLField(
+        blank=True,
+        help_text="URL the source label should link to",
+    )
+
+    # ── Closing statement ─────────────────────────────────────────────
+    closing_statement = RichTextField(
+        blank=True,
+        help_text="Bold statement that appears below the horizontal rule, explaining why the organisation exists.",
+    )
+
+    # ── Call to action ────────────────────────────────────────────────
+    cta_header = models.CharField(
+        max_length=300,
+        blank=True,
+        default="This is what we believe.\nIf you believe it too, join us.",
+        help_text="Heading above the CTA buttons",
+    )
+    cta_volunteer_text = models.CharField(
+        max_length=100,
+        default="Volunteer",
+    )
+    cta_volunteer_url = models.CharField(
+        max_length=500,
+        default="/volunteer/",
+    )
+    cta_partner_text = models.CharField(
+        max_length=100,
+        default="Partner With Us",
+    )
+    cta_partner_url = models.CharField(
+        max_length=500,
+        default="/partner/",
+    )
+    cta_programs_text = models.CharField(
+        max_length=100,
+        default="Read Our Work",
+    )
+    cta_programs_url = models.CharField(
+        max_length=500,
+        default="/programs/",
+    )
+
+    # ── Publishing controls ───────────────────────────────────────────
+    is_published = models.BooleanField(
+        default=True,
+        help_text="Uncheck to hide this content (the page will fall back to defaults).",
+    )
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Problem Page"
+        verbose_name_plural = "Problem Page"
+
+    def __str__(self) -> str:
+        return "Why We Exist – Problem Page"
+
+    def save(self, *args, **kwargs):
+        """Ensure only one ProblemPage instance exists (singleton pattern)."""
+        if not self.pk and ProblemPage.objects.exists():
+            # If an instance already exists, update it instead of creating a new one
+            existing = ProblemPage.objects.first()
+            self.pk = existing.pk
+        super().save(*args, **kwargs)

@@ -6,7 +6,7 @@ from django.views.generic import DetailView, ListView, TemplateView
 from core.models import FocusArea, ImpactMetric
 from people.models import Testimonial
 
-from .models import Program, SuccessStory
+from .models import Program, SuccessStory, ProfessionalServiceCategory, ProfessionalService
 
 
 
@@ -48,4 +48,36 @@ class SuccessStoryDetailView(DetailView):
 
     def get_object(self, queryset=None):
         return get_object_or_404(SuccessStory, slug=self.kwargs["slug"], is_published=True)
+
+
+class ProfessionalServicesListView(TemplateView):
+    template_name = "programs/professional_services_list.html"
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["categories"] = ProfessionalServiceCategory.objects.filter(is_published=True).order_by("order", "title")
+        return ctx
+
+
+class ProfessionalServiceCategoryDetailView(DetailView):
+    model = ProfessionalServiceCategory
+    template_name = "programs/professional_service_category_detail.html"
+    context_object_name = "category"
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(ProfessionalServiceCategory, slug=self.kwargs["slug"], is_published=True)
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["services"] = self.object.services.filter(is_published=True).order_by("order", "title")
+        return ctx
+
+
+class ProfessionalServiceDetailView(DetailView):
+    model = ProfessionalService
+    template_name = "programs/professional_service_detail.html"
+    context_object_name = "service"
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(ProfessionalService, slug=self.kwargs["slug"], is_published=True)
 

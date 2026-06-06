@@ -7,7 +7,7 @@ from django.views.generic import DetailView, ListView, TemplateView
 from blog.models import Post
 from people.models import Testimonial, Founder, BoardMember
 from engagement.models import Resource
-from home.models import Ethos, HomepageHeroSlide, Page, AboutPage, AnnualReport, IntroVideo, Values
+from home.models import Ethos, HomepageHeroSlide, Page, AboutPage, AnnualReport, IntroVideo, Values, ProblemPage
 from core.models import FocusArea, ImpactMetric
 from django.http import HttpResponse
 from django.contrib.sitemaps import Sitemap
@@ -49,7 +49,6 @@ class HomeView(TemplateView):
 
 class AboutView(TemplateView):
     template_name = "core/about.html"
-
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx["about_page"] = AboutPage.objects.all().first()
@@ -73,6 +72,11 @@ class NewsResourcesView(TemplateView):
 
 class WhyWeExistView(TemplateView):
     template_name = "core/problem.html"
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["problem_page"] = ProblemPage.objects.filter(is_published=True).first()
+        return ctx
 
 
 # Legacy views - kept for backward compatibility but could be deprecated

@@ -223,9 +223,9 @@ else:
         },
     }
 
-    _public_base = _normalize_public_base_url(AWS_S3_CUSTOM_DOMAIN)
-    STATIC_URL = f"{_public_base}/{STATIC_LOCATION}/"
-    MEDIA_URL = f"{_public_base}/{AWS_LOCATION}/"
+_public_base = _normalize_public_base_url(AWS_S3_CUSTOM_DOMAIN)
+STATIC_URL = f"{_public_base}/{STATIC_LOCATION}/"
+MEDIA_URL = f"{_public_base}/{AWS_LOCATION}/"
 
 
 # Email (defaults to console; configure SMTP via env vars in production)

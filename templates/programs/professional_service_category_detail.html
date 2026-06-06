@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+
+{% block title %}{{ category.title }} · Professional Services · {{ site_settings.name|default:"AfriEthics Initiative" }}{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<div class="page-header">
+  <div class="container">
+    <h1>{{ category.title }}</h1>
+    <nav aria-label="breadcrumb" class="mt-3">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item"><a href="/programs/">Our Work</a></li>
+        <li class="breadcrumb-item"><a href="/professional-services/">Professional Services</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ category.title }}</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<div class="container py-5">
+  <div class="row">
+    <!-- Main Content -->
+    <div class="col-lg-8">
+      <div class="wow fadeInUp">
+        <!-- Category Header -->
+        {% if category.image %}
+        <div class="mb-4">
+          <img src="{{ category.image.url }}" alt="{{ category.title }}" class="img-fluid rounded shadow">
+        </div>
+        {% elif category.icon %}
+        <div class="text-center mb-4">
+          <i class="{{ category.icon }} fa-5x text-primary"></i>
+        </div>
+        {% endif %}
+
+        <!-- Category Description -->
+        {% if category.summary %}
+        <p class="lead">{{ category.summary }}</p>
+        {% endif %}
+
+        {% if category.description %}
+        <div class="content-body mb-5">
+          {{ category.description|safe }}
+        </div>
+        {% endif %}
+
+        <!-- Services List -->
+        <h3 class="section-title-sm mb-4">Services in This Category</h3>
+        {% if services %}
+        <div class="row g-4">
+          {% for service in services %}
+          <div class="col-md-6">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <a href="{{ service.get_absolute_url }}" class="text-decoration-none text-primary">
+                    {{ service.title }}
+                  </a>
+                </h5>
+                <p class="card-text text-muted small">{{ service.summary|truncatewords:30 }}</p>
+                <a href="{{ service.get_absolute_url }}" class="btn btn-sm btn-outline-primary mt-2">
+                  Learn More <i class="fas fa-arrow-right ms-1"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+          <i class="fas fa-info-circle me-2"></i>
+          No services available in this category yet.
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-lg-4">
+      <!-- Category Info Card -->
+      <div class="card border-0 shadow-sm mb-4 wow fadeInUp" data-wow-delay="0.2s">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">Category Details</h5>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <strong>Total Services</strong><br>
+            <span class="badge bg-primary">{{ services.count }} Services</span>
+          </li>
+          {% if category.updated_at %}
+          <li class="list-group-item">
+            <strong>Last Updated</strong><br>
+            {{ category.updated_at|date:"M j, Y" }}
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+
+      <!-- Back Navigation -->
+      <div class="card border-0 shadow-sm mb-4 wow fadeInUp" data-wow-delay="0.3s">
+        <div class="card-body">
+          <a href="/professional-services/" class="btn btn-outline-primary w-100">
+            <i class="fas fa-arrow-left me-2"></i>Back to All Services
+          </a>
+        </div>
+      </div>
+
+      <!-- Call to Action -->
+      <div class="card border-0 shadow-sm wow fadeInUp" data-wow-delay="0.4s">
+        <div class="card-body text-center">
+          <h5 class="card-title">Need More Information?</h5>
+          <p class="card-text small">Contact us to discuss how these services can meet your needs.</p>
+          <a href="/contact/" class="btn btn-primary w-100">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .page-header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    padding: 4rem 0;
+    margin-bottom: 3rem;
+  }
+
+  .page-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+
+  .breadcrumb {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+  }
+
+  .breadcrumb-item a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+  }
+
+  .breadcrumb-item a:hover {
+    color: white;
+  }
+
+  .breadcrumb-item.active {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .content-body {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #333;
+  }
+
+  .content-body h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+  }
+
+  .content-body h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: #34495e;
+  }
+
+  .content-body p {
+    margin-bottom: 1rem;
+  }
+
+  .section-title-sm {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 1rem;
+  }
+
+  .card {
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  }
+</style>
+
+{% endblock %}
