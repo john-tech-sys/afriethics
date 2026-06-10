@@ -77,7 +77,7 @@ class Links(models.Model):
 	link = models.URLField()
 
 	def __str__(self):
-		return self.name
+		return self.name or self.link
 	class Meta:
 		verbose_name_plural = "Links"
 

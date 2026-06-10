@@ -120,22 +120,22 @@ class Ethos(models.Model):
     active = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.vision
+        return self.vision or "Unnamed Ethos"
 
     class Meta:
         verbose_name_plural = "Ethos"
 
 
 class Values(models.Model):
-    title = models.CharField(blank=True, null=True)
-    label = models.CharField(blank=True, null=True)
+    title = models.CharField(max_length=255, blank=True, null=True)
+    label = models.CharField(max_length=100, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     call_to_url = models.CharField(max_length=500, default="/")
     order = models.PositiveIntegerField(default=0)
     active = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.title
+        return self.title or "Unnamed Value"
 
     class Meta:
         ordering = ["order", "title"]
@@ -148,6 +148,9 @@ class Country(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name_plural = "Countries"
 
 
 class AboutPage(models.Model):
@@ -197,10 +200,6 @@ class AnnualReport(models.Model):
 
     def __str__(self) -> str:
         return f"{self.title} ({self.year})"
-
-
-    class Meta:
-        verbose_name_plural = "Countries"
 
 
 class Discipline(models.Model):

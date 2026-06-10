@@ -13,7 +13,7 @@
 </div>
 <!-- Page Header End -->
 <!-- About Page Intro Start -->
-{% if about_page and (about_page.section_type == 'mission_vision' or about_page.section_type == 'background') %}
+{% if about_page and about_page.section_type == 'mission_vision' or about_page and about_page.section_type == 'background' %}
   <div class="container py-5">
     <div class="row align-items-center g-4">
       {% if about_page.image %}
