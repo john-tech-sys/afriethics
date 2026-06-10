@@ -13,55 +13,33 @@
 </div>
 <!-- Page Header End -->
 <!-- About Page Intro Start -->
-{% if about_page and about_page.section_type == 'mission_vision' or about_page and about_page.section_type == 'background' %}
-  <div class="container py-5">
-    <div class="row align-items-center g-4">
-      {% if about_page.image %}
-        <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-          <img src="{{ about_page.image.url }}" class="img-fluid rounded shadow-sm" alt="{{ about_page.title }}" />
-        </div>
-        <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.2s">
-          <h2 class="section-title mb-3">{{ about_page.title }}</h2>
-          <div class="about-page-content">
-            {{ about_page.content|safe }}
+{% for page in about_pages %}
+  {% if forloop.first %}
+    <div class="container py-5">
+      <div class="row align-items-center g-4">
+        {% if page.image %}
+          <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+            <img src="{{ page.image.url }}" class="img-fluid rounded shadow-sm" alt="{{ page.title }}" />
           </div>
-        </div>
-      {% else %}
-        <div class="col-12 wow fadeInUp" data-wow-delay="0.1s">
-          <h2 class="section-title mb-3">{{ about_page.title }}</h2>
-          <div class="about-page-content">
-            {{ about_page.content|safe }}
+          <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.2s">
+            <h2 class="section-title mb-3">{{ page.title }}</h2>
+            <div class="about-page-content">
+              {{ page.content|safe }}
+            </div>
           </div>
-        </div>
-      {% endif %}
+        {% else %}
+          <div class="col-12 wow fadeInUp" data-wow-delay="0.1s">
+            <h2 class="section-title mb-3">{{ page.title }}</h2>
+            <div class="about-page-content">
+              {{ page.content|safe }}
+            </div>
+          </div>
+        {% endif %}
+      </div>
     </div>
-  </div>
-{% endif %}
+  {% endif %}
+{% endfor %}
 <!-- About Page Intro End -->
-
-<!-- About Page Intro for Governance (second section) -->
-{% if about_page and about_page.section_type == 'governance' %}
-  <div class="container-fluid bg-light py-5" style="padding-top: 0;">
-    <div class="container" style="padding-top: 0;">
-      <div class="text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
-        <h2 class="section-title">{{ about_page.title }}</h2>
-      </div>
-      <div class="row justify-content-center">
-        <div class="col-lg-10">
-          <div class="about-page-content wow fadeInUp" data-wow-delay="0.2s" style="text-align:left;">
-            {{ about_page.content|safe }}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-{% endif %}
-<!-- About Page Intro for Governance End -->
-
-
-
-
-
 
 <!-- Our Values Start -->
 <div class="container-fluid py-5" style="background-color: #E8F0FB;">
@@ -172,6 +150,19 @@
       <h2 class="section-title">Governance & Leadership</h2>
       <p class="section-subtitle">Our Board and Advisory Team</p>
     </div>
+
+    <!-- Governance Intro from AboutPage (Second Section) -->
+    {% for page in about_pages %}
+      {% if forloop.counter == 2 %}
+        <div class="row justify-content-center mb-5">
+          <div class="col-lg-10">
+            <div class="about-page-content wow fadeInUp" data-wow-delay="0.2s" style="text-align:left;">
+              {{ page.content|safe }}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
 
     <!-- Board Directors -->
     {% if directors %}
