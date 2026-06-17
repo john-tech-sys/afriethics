@@ -228,8 +228,23 @@ STATIC_URL = f"{_public_base}/{STATIC_LOCATION}/"
 MEDIA_URL = f"{_public_base}/{AWS_LOCATION}/"
 
 
-# Email (defaults to console; configure SMTP via env vars in production)
-EMAIL_BACKEND = env("DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
+# Email
+# Target inbox for all site form submissions
+AFRIETHICS_INFO_EMAIL = config("AFRIETHICS_INFO_EMAIL", default="info@afriethics.org")
+
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default=AFRIETHICS_INFO_EMAIL)
+SERVER_EMAIL = config("SERVER_EMAIL", default=DEFAULT_FROM_EMAIL)
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 
 # Common security toggles (safe defaults for many PaaS deployments)
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
