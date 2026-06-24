@@ -6,7 +6,7 @@ from django.db import models
 
 class Contact(models.Model):
     item = models.CharField(max_length=200, blank=True, null=True)
-    item_id = models.IntegerField()
+    item_id = models.IntegerField(blank=True, null=True)
     name = models.CharField(max_length=200, blank=True, null=True)
     email = models.CharField(max_length=200, blank=True, null=True)
     phone = models.CharField(max_length=200, blank=True, null=True)
