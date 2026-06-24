@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import FormView, TemplateView
@@ -8,16 +9,26 @@ from django.conf import settings
 from django.core.mail import send_mail
 from .forms import ContactForm, PartnerProposalForm, VolunteerApplicationForm
 
+logger = logging.getLogger(__name__)
 
-def _send_form_email(*, subject: str, message: str, from_email: str | None = None) -> None:
-    """Send a notification email for engagement forms."""
-    send_mail(
-        subject=subject,
-        message=message,
-        from_email=from_email or getattr(settings, "DEFAULT_FROM_EMAIL", None) or settings.SERVER_EMAIL,
-        recipient_list=[settings.AFRIETHICS_INFO_EMAIL],
-        fail_silently=False,
-    )
+
+def _send_form_email(*, subject: str, message: str, from_email: str | None = None) -> bool:
+    """Send a notification email for engagement forms.
+    
+    Returns True if sent successfully, False otherwise.
+    """
+    try:
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=from_email or getattr(settings, "DEFAULT_FROM_EMAIL", None) or settings.SERVER_EMAIL,
+            recipient_list=[settings.AFRIETHICS_INFO_EMAIL],
+            fail_silently=False,
+        )
+        return True
+    except Exception as e:
+        logger.error(f"Failed to send email with subject '{subject}': {str(e)}")
+        return False
 
 
 class ContactView(FormView):
@@ -27,7 +38,7 @@ class ContactView(FormView):
 
     def form_valid(self, form):
         form.save()
-        _send_form_email(
+        email_sent = _send_form_email(
             subject="AfriEthics contact form submission",
             message=(
                 f"New contact submission\n\n"
@@ -37,7 +48,10 @@ class ContactView(FormView):
                 f"Message:\n{form.cleaned_data.get('message')}\n"
             ),
         )
-        messages.success(self.request, "Thanks — your message has been received.")
+        if not email_sent:
+            messages.warning(self.request, "Your message has been saved, but we couldn't send a confirmation email. We'll still review your message.")
+        else:
+            messages.success(self.request, "Thanks — your message has been received.")
         return super().form_valid(form)
 
 
@@ -48,7 +62,7 @@ class VolunteerView(FormView):
 
     def form_valid(self, form):
         form.save()
-        _send_form_email(
+        email_sent = _send_form_email(
             subject="AfriEthics volunteer application submission",
             message=(
                 f"New volunteer application\n\n"
@@ -59,7 +73,10 @@ class VolunteerView(FormView):
                 f"Motivation:\n{form.cleaned_data.get('motivation')}\n"
             ),
         )
-        messages.success(self.request, "Thanks — your application has been submitted.")
+        if not email_sent:
+            messages.warning(self.request, "Your application has been saved, but we couldn't send a confirmation email. We'll still review your application.")
+        else:
+            messages.success(self.request, "Thanks — your application has been submitted.")
         return super().form_valid(form)
 
 
@@ -70,7 +87,7 @@ class PartnerView(FormView):
 
     def form_valid(self, form):
         form.save()
-        _send_form_email(
+        email_sent = _send_form_email(
             subject="AfriEthics partner proposal submission",
             message=(
                 f"New partner proposal\n\n"
@@ -82,7 +99,10 @@ class PartnerView(FormView):
                 f"Message:\n{form.cleaned_data.get('message')}\n"
             ),
         )
-        messages.success(self.request, "Thanks — your proposal has been submitted.")
+        if not email_sent:
+            messages.warning(self.request, "Your proposal has been saved, but we couldn't send a confirmation email. We'll still review your proposal.")
+        else:
+            messages.success(self.request, "Thanks — your proposal has been submitted.")
         return super().form_valid(form)
 
 

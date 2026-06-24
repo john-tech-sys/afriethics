@@ -232,18 +232,25 @@ MEDIA_URL = f"{_public_base}/{AWS_LOCATION}/"
 # Target inbox for all site form submissions
 AFRIETHICS_INFO_EMAIL = config("AFRIETHICS_INFO_EMAIL", default="info@afriethics.org")
 
-DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default=AFRIETHICS_INFO_EMAIL)
+# Email backend configuration (load credentials from environment variables for security)
+EMAIL_BACKEND = config("EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend")
+EMAIL_HOST = config("EMAIL_HOST", default="smtp.gmail.com")
+EMAIL_PORT = config("EMAIL_PORT", cast=int, default=587)
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool, default=True)
+EMAIL_USE_SSL = config("EMAIL_USE_SSL", cast=bool, default=False)
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
+
+# If no EMAIL_HOST_USER is set, use the console backend (no emails sent, but no errors)
+if not EMAIL_HOST_USER or not EMAIL_HOST_PASSWORD:
+    if ENVIRONMENT == "production":
+        import logging
+        logger = logging.getLogger("django")
+        logger.warning("Email credentials not configured. Emails will not be sent. Set EMAIL_HOST_USER and EMAIL_HOST_PASSWORD environment variables.")
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default=EMAIL_HOST_USER or AFRIETHICS_INFO_EMAIL)
 SERVER_EMAIL = config("SERVER_EMAIL", default=DEFAULT_FROM_EMAIL)
-
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-EMAIL_HOST_PASSWORD = "tkpvlqlsmrcsspxu"
-EMAIL_HOST_USER = "info@afriethics.org"
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 # Common security toggles (safe defaults for many PaaS deployments)
