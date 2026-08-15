@@ -129,9 +129,9 @@
         <div class="row g-4 justify-content-center">
           {% for founder in founders %}
             <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.{{ forloop.counter }}s">
-              <div class="card h-100 border-0 shadow-sm text-center">
+              <div class="card border-0 shadow-sm text-center" style="height:100%;">
                 {% if founder.photo %}
-                  <img src="{{ founder.photo.url }}" class="card-img-top" alt="{{ founder.name }}">
+                  <img src="{{ founder.photo.url }}" class="card-img-top" alt="{{ founder.name }}" style="width:100%;height:220px;object-fit:cover;">
                 {% endif %}
                 <div class="card-body">
                   <h5 class="card-title">{{ founder.name }}</h5>
@@ -167,9 +167,9 @@
         <div class="row g-4">
           {% for member in directors %}
             <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.{{ forloop.counter }}s">
-              <div class="card h-100 border-0 shadow-sm">
+              <div class="card border-0 shadow-sm" style="height:100%;">
                 {% if member.photo %}
-                  <img src="{{ member.photo.url }}" class="card-img-top" alt="{{ member.name }}">
+                  <img src="{{ member.photo.url }}" class="card-img-top" alt="{{ member.name }}" style="width:100%;height:200px;object-fit:cover;">
                 {% endif %}
                 <div class="card-body">
                   <h5 class="card-title">{{ member.name }}</h5>
@@ -197,9 +197,9 @@
         <div class="row g-4">
           {% for member in advisors %}
             <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.{{ forloop.counter }}s">
-              <div class="card h-100 border-0 shadow-sm">
+              <div class="card border-0 shadow-sm" style="height:100%;">
                 {% if member.photo %}
-                  <img src="{{ member.photo.url }}" class="card-img-top" alt="{{ member.name }}">
+                  <img src="{{ member.photo.url }}" class="card-img-top" alt="{{ member.name }}" style="width:100%;height:200px;object-fit:cover;">
                 {% endif %}
                 <div class="card-body">
                   <h5 class="card-title">{{ member.name }}</h5>
